@@ -63,7 +63,8 @@ Rectangle {
 		verticalAlignment: Text.AlignVCenter
 
 		font {
-			family: gilroyLight.name
+			family: display.name
+			weight: Font.Medium
 			pixelSize: height * 0.75
 		}
 	}
@@ -82,7 +83,8 @@ Rectangle {
 		verticalAlignment: Text.AlignVCenter
 
 		font {
-			family: gilroyLight.name
+			family: display.name
+			weight: Font.Light
 			pixelSize: height * 0.5
 		}
 	}

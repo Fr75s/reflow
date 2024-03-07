@@ -29,10 +29,7 @@ FocusScope {
     property real usy: 1080 / sh
 
     // Just a few fonts, needs [id].name to work in font.family
-    FontLoader { id: gilroyExtraBold; source: "./assets/font/Gilroy-ExtraBold.otf" }
-	FontLoader { id: gilroyLight; source: "./assets/font/Gilroy-Light.otf" }
-	FontLoader { id: ralewayExtraBold; source: "./assets/font/Raleway-ExtraBold.ttf"}
-	FontLoader { id: ralewayLight; source: "./assets/font/Raleway-Light.ttf" }
+	FontLoader { id: display; source: "./assets/font/Outfit-Light.otf" }
 
 	IconFont {
         id: icons

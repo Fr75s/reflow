@@ -5,71 +5,100 @@ import QtGraphicalEffects 1.15
 Component {
 	id: gameflowDelegate
 
-	Image {
-		id: gameBoxArt
+	Item {
 		width: gameWidth
-		height: width * (sourceSize.height / sourceSize.width)
+		height: width * (gameBoxArt.sourceSize.height / gameBoxArt.sourceSize.width)
 
-		anchors.bottom: parent.bottom
-
-		source: assets.boxFront || "../assets/no_game.png"
-
-		z: (sideCount + 2) - Math.abs(gameflowView.realCurrentIndex - index)
+		z: (sideCount + 2) - Math.abs(gameflowView.realCurrentIndex - index);
 
 		property real leftRightCenter: gameflowView.realCurrentIndex === index ? 0 : (x + width / 2 > sw / 2 ? 2 : 1)
 
-		transform: Rotation {
-			id: gameRotation
-			origin.x: width / 2;
-			origin.y: height / 2;
+		anchors.bottom: parent.bottom
 
-			axis { x: 0; y: 1; z: 0 }
-			angle: leftRightCenter === 0 ? 0 : (leftRightCenter === 1 ? 30 : -30);
+		Image {
+			id: gameBoxArt
+			width: parent.width
+			height: parent.height
 
-			Behavior on angle {
+			anchors.bottom: parent.bottom
+
+			source: assets.boxFront || "../assets/no_game.png"
+
+			visible: false
+
+			Component.onCompleted: {
+				if (!assets.boxFront) {
+					console.log(title);
+					sourceSize.height = sourceSize.width * (1 / averageAspectRatio)
+				}
+			}
+		}
+
+		DropShadow {
+			id: gameDisplay
+
+			anchors.fill: gameBoxArt
+			horizontalOffset: 0
+			verticalOffset: 5
+			radius: 20
+			samples: 21
+			color: "#ff000000"
+			source: gameBoxArt
+
+			z: parent.z
+
+			transform: Rotation {
+				id: shadowRotation
+				origin.x: width / 2;
+				origin.y: height / 2;
+
+				axis { x: 0; y: 1; z: 0 }
+				angle: leftRightCenter === 0 ? 0 : (leftRightCenter === 1 ? 30 : -30);
+
+				Behavior on angle {
+					NumberAnimation {
+						easing.type: Easing.OutQuad
+						duration: 300
+					}
+				}
+			}
+
+			scale: leftRightCenter === 0 ? 1 : (0.85)
+
+			Behavior on scale {
 				NumberAnimation {
 					easing.type: Easing.OutQuad
 					duration: 300
 				}
 			}
-		}
 
-		scale: leftRightCenter === 0 ? 1 : (0.85)
+			Image {
+				id: reflectionSource
 
-		Behavior on scale {
-			NumberAnimation {
-				easing.type: Easing.OutQuad
-				duration: 300
-			}
-		}
+				width: gameBoxArt.width
+				height: gameBoxArt.height
 
-		Image {
-			id: reflectionSource
+				anchors.top: parent.bottom
+				anchors.topMargin: 4
 
-			width: parent.width
-			height: parent.height
+				source: gameBoxArt.source
 
-			anchors.top: parent.bottom
-			anchors.topMargin: 2
+				transform: Scale {
+					origin { x: width / 2; y: height / 2 }
+					yScale: -1.0
+				}
 
-			source: parent.source
-
-			transform: Scale {
-				origin { x: width / 2; y: height / 2 }
-				yScale: -1.0
-			}
-
-			Rectangle {
-				anchors.fill: parent
-				color: "#80000000"
-			}
-		}
-
-		Component.onCompleted: {
-			if (!assets.boxFront) {
-				console.log(title);
-				sourceSize.height = sourceSize.width * (1 / averageAspectRatio)
+				LinearGradient {
+					anchors.fill: parent
+					start: Qt.point(0, parent.height)
+					end: Qt.point(0, parent.height - 300)
+					gradient: Gradient {
+						GradientStop { position: 0.0; color: "#60000000" }
+						GradientStop { position: 1.0; color: "#d0000000" }
+					}
+				}
 			}
 		}
 	}
+
 }

@@ -46,8 +46,11 @@ FocusScope {
 		text: currentCollection.name
 		color: colors["text"]
 
-		font.family: gilroyLight.name
-		font.pixelSize: parent.height * .04
+		font {
+			family: display.name
+			weight: Font.Medium
+			pixelSize: parent.height * .04
+		}
 
 		anchors.left: parent.left
 		anchors.leftMargin: parent.width * .05
@@ -103,7 +106,8 @@ FocusScope {
 
 			verticalAlignment: Text.AlignVCenter
 			font {
-				family: gilroyLight.name
+				family: display.name
+				weight: Font.Light
 				pixelSize: parent.height * 0.8
 			}
 
@@ -125,7 +129,8 @@ FocusScope {
 
 			verticalAlignment: Text.AlignVCenter
 			font {
-				family: gilroyLight.name
+				family: display.name
+				weight: Font.Light
 				pixelSize: parent.height * 0.8
 			}
 
