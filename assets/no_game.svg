@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1280"
+   height="720"
+   viewBox="0 0 1280 720"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="no_game.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="0.93607326"
+     inkscape:cx="569.39988"
+     inkscape:cy="340.78529"
+     inkscape:window-width="1904"
+     inkscape:window-height="993"
+     inkscape:window-x="8"
+     inkscape:window-y="35"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#f7597b;fill-opacity:1;stroke:none;stroke-width:100;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+       id="rect109"
+       width="1280"
+       height="720"
+       x="0"
+       y="0"
+       sodipodi:insensitive="true" />
+    <g
+       id="g120"
+       style="fill:#f2f6ff;fill-opacity:1"
+       transform="translate(-64,-24)">
+      <g
+         id="g57"
+         transform="translate(240)"
+         style="fill:#f2f6ff;fill-opacity:1">
+        <path
+           id="path2"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 304,324 a 12,12 0 0 0 12,12 v 12 h -12 a 12,12 0 0 0 -12,-12 v -12 z" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect3"
+           width="96"
+           height="32"
+           x="272"
+           y="336"
+           ry="8" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect4"
+           width="32"
+           height="80"
+           x="336"
+           y="288" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect5"
+           width="32"
+           height="96"
+           x="272"
+           y="272"
+           ry="8" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect6"
+           width="96"
+           height="32"
+           x="272"
+           y="272"
+           ry="8" />
+        <path
+           id="path12"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 304,316 a 12,12 0 0 1 12,-12 v -12 h -12 a 12,12 0 0 1 -12,12 v 12 z" />
+        <path
+           id="path13"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 336,316 a 12,12 0 0 0 -12,-12 v -12 h 12 a 12,12 0 0 0 12,12 v 12 z" />
+      </g>
+      <g
+         id="g56"
+         transform="translate(240)"
+         style="fill:#f2f6ff;fill-opacity:1">
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect973"
+           width="96"
+           height="32"
+           x="144"
+           y="336"
+           ry="8" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect1"
+           width="32"
+           height="64"
+           x="144"
+           y="304"
+           ry="8" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect2"
+           width="32"
+           height="128"
+           x="208"
+           y="240"
+           ry="8" />
+        <path
+           id="path14"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 176,324 a 12,12 0 0 0 12,12 v 12 h -12 a 12,12 0 0 0 -12,-12 v -12 z" />
+        <path
+           id="path15"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 208,324 a 12,12 0 0 1 -12,12 v 12 h 12 a 12,12 0 0 1 12,-12 v -12 z" />
+      </g>
+      <g
+         id="g58"
+         transform="translate(240)"
+         style="fill:#f2f6ff;fill-opacity:1">
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect7"
+           width="32"
+           height="96"
+           x="400"
+           y="272"
+           ry="8" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect8"
+           width="160"
+           height="32"
+           x="400"
+           y="272"
+           ry="8" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect9"
+           width="32"
+           height="96"
+           x="464"
+           y="272"
+           ry="8" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect10"
+           width="32"
+           height="96"
+           x="528"
+           y="272"
+           ry="8" />
+        <path
+           id="path16"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 432,316 a 12,12 0 0 1 12,-12 v -12 h -12 a 12,12 0 0 1 -12,12 v 12 z" />
+        <path
+           id="path17"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 464,316 a 12,12 0 0 0 -12,-12 v -12 h 12 a 12,12 0 0 0 12,12 v 12 z" />
+        <path
+           id="path18"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 496,316 a 12,12 0 0 1 12,-12 v -12 h -12 a 12,12 0 0 1 -12,12 v 12 z" />
+        <path
+           id="path19"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 528,316 a 12,12 0 0 0 -12,-12 v -12 h 12 a 12,12 0 0 0 12,12 v 12 z" />
+      </g>
+      <g
+         id="g55"
+         transform="translate(240)"
+         style="fill:#f2f6ff;fill-opacity:1">
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect19"
+           width="96"
+           height="32"
+           x="144"
+           y="496"
+           ry="8" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect20"
+           width="32"
+           height="96"
+           x="208"
+           y="432"
+           ry="8" />
+        <path
+           id="path20"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 176,484 a 12,12 0 0 0 12,12 v 12 h -12 a 12,12 0 0 0 -12,-12 v -12 z" />
+        <path
+           id="path21"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 208,484 a 12,12 0 0 1 -12,12 v 12 h 12 a 12,12 0 0 1 12,-12 v -12 z" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect21"
+           width="32"
+           height="128"
+           x="144"
+           y="400"
+           ry="8" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect22"
+           width="96"
+           height="32"
+           x="144"
+           y="432"
+           ry="8" />
+        <path
+           id="path22"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 176,476 a 12,12 0 0 1 12,-12 v -12 h -12 a 12,12 0 0 1 -12,12 v 12 z" />
+        <path
+           id="path23"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 208,476 a 12,12 0 0 0 -12,-12 v -12 h 12 a 12,12 0 0 0 12,12 v 12 z" />
+        <path
+           id="path24"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 176,420 a 12,12 0 0 0 12,12 v 12 h -12 a 12,12 0 0 0 -12,-12 v -12 z" />
+      </g>
+      <g
+         id="g53"
+         transform="translate(240)"
+         style="fill:#f2f6ff;fill-opacity:1">
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect28"
+           width="96"
+           height="32"
+           x="400"
+           y="496"
+           ry="8" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect29"
+           width="32"
+           height="64"
+           x="464"
+           y="464"
+           ry="8" />
+        <path
+           id="path30"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 464,484 a 12,12 0 0 1 -12,12 v 12 h 12 a 12,12 0 0 1 12,-12 v -12 z" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect33"
+           width="96"
+           height="32"
+           x="-496"
+           y="-434"
+           ry="8"
+           transform="scale(-1)" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect34"
+           width="32"
+           height="64"
+           x="-432"
+           y="-466"
+           ry="8"
+           transform="scale(-1)" />
+        <path
+           id="path34"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 432,446 a 12,12 0 0 1 12,-12 v -12 h -12 a 12,12 0 0 1 -12,12 v 12 z" />
+      </g>
+      <g
+         id="g52"
+         transform="translate(240)"
+         style="fill:#f2f6ff;fill-opacity:1">
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect35"
+           width="96"
+           height="32"
+           x="528"
+           y="496"
+           ry="8" />
+        <path
+           id="path36"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 560,484 a 12,12 0 0 0 12,12 v 12 h -12 a 12,12 0 0 0 -12,-12 v -12 z" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect37"
+           width="32"
+           height="128"
+           x="528"
+           y="400"
+           ry="8" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect38"
+           width="96"
+           height="32"
+           x="528"
+           y="432"
+           ry="8" />
+        <path
+           id="path38"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 560,476 a 12,12 0 0 1 12,-12 v -12 h -12 a 12,12 0 0 1 -12,12 v 12 z" />
+        <path
+           id="path40"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 560,420 a 12,12 0 0 0 12,12 v 12 h -12 a 12,12 0 0 0 -12,-12 v -12 z" />
+      </g>
+      <g
+         id="g54"
+         transform="translate(240)"
+         style="fill:#f2f6ff;fill-opacity:1">
+        <path
+           id="path25"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 304,484 a 12,12 0 0 0 12,12 v 12 h -12 a 12,12 0 0 0 -12,-12 v -12 z" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect25"
+           width="96"
+           height="32"
+           x="272"
+           y="496"
+           ry="8" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect26"
+           width="32"
+           height="96"
+           x="272"
+           y="432"
+           ry="8" />
+        <path
+           id="path27"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 336,508 a 12,12 0 0 1 12,-12 v -12 h -12 a 12,12 0 0 1 -12,12 v 12 z" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect40"
+           width="32"
+           height="96"
+           x="336"
+           y="432"
+           ry="8" />
+      </g>
+      <g
+         id="g49"
+         transform="translate(240)"
+         style="fill:#f2f6ff;fill-opacity:1">
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect41"
+           width="96"
+           height="32"
+           x="656"
+           y="496"
+           ry="8" />
+        <path
+           id="path41"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 688,484 a 12,12 0 0 0 12,12 v 12 h -12 a 12,12 0 0 0 -12,-12 v -12 z" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect42"
+           width="32"
+           height="96"
+           x="656"
+           y="432"
+           ry="8" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect43"
+           width="96"
+           height="48"
+           x="656"
+           y="432"
+           ry="8" />
+      </g>
+      <g
+         id="g50"
+         transform="translate(240)"
+         style="fill:#f2f6ff;fill-opacity:1">
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect44"
+           width="32"
+           height="96"
+           x="784"
+           y="432"
+           ry="8" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect45"
+           width="96"
+           height="32"
+           x="784"
+           y="432"
+           ry="8" />
+        <path
+           id="path45"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 816,476 a 12,12 0 0 1 12,-12 v -12 h -12 a 12,12 0 0 1 -12,12 v 12 z" />
+      </g>
+      <g
+         id="g51"
+         transform="translate(240)"
+         style="fill:#f2f6ff;fill-opacity:1">
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect46"
+           width="96"
+           height="32"
+           x="912"
+           y="496"
+           ry="8" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect47"
+           width="32"
+           height="64"
+           x="976"
+           y="464"
+           ry="8" />
+        <path
+           id="path47"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 976,484 a 12,12 0 0 1 -12,12 v 12 h 12 a 12,12 0 0 1 12,-12 v -12 z" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect48"
+           width="96"
+           height="32"
+           x="-1008"
+           y="-434"
+           ry="8"
+           transform="scale(-1)" />
+        <rect
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           id="rect49"
+           width="32"
+           height="64"
+           x="-944"
+           y="-466"
+           ry="8"
+           transform="scale(-1)" />
+        <path
+           id="path49"
+           style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+           d="m 944,446 a 12,12 0 0 1 12,-12 v -12 h -12 a 12,12 0 0 1 -12,12 v 12 z" />
+      </g>
+    </g>
+    <g
+       id="g119"
+       style="fill:#f2f6ff;fill-opacity:1"
+       transform="translate(-64,-24)">
+      <rect
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         id="rect81"
+         width="192"
+         height="32"
+         x="160"
+         y="496"
+         ry="8" />
+      <path
+         id="path81"
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         d="m 191.99999,484.00001 a 12,12 0 0 0 12,12 v 12 h -12 a 12,12 0 0 0 -12,-12 v -12 z" />
+      <rect
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         id="rect82"
+         width="32"
+         height="224"
+         x="160"
+         y="304"
+         ry="8" />
+      <path
+         id="path83"
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         d="m 319.99999,508.00001 a 12,12 0 0 1 12,-12 v -12 h -12 a 12,12 0 0 1 -12,12 v 12 z" />
+      <rect
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         id="rect97"
+         width="32"
+         height="224"
+         x="320"
+         y="304"
+         ry="8" />
+      <rect
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         id="rect98"
+         width="192"
+         height="32"
+         x="160"
+         y="304"
+         ry="8" />
+      <path
+         id="path98"
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         d="m 191.99999,348.00001 a 12,12 0 0 1 12,-12 v -12 h -12 a 12,12 0 0 1 -12,12 v 12 z" />
+      <path
+         id="path99"
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         d="m 319.99999,324.00001 a 12,12 0 0 0 12,12 v 12 h -12 a 12,12 0 0 0 -12,-12 v -12 z" />
+      <rect
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         id="rect99"
+         width="192"
+         height="32"
+         x="160"
+         y="240"
+         ry="8" />
+      <rect
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         id="rect100"
+         width="32"
+         height="96"
+         x="192"
+         y="240"
+         ry="8" />
+      <rect
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         id="rect101"
+         width="32"
+         height="96"
+         x="288"
+         y="240"
+         ry="8" />
+      <path
+         id="path101"
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         d="m 223.99999,284.00001 a 12,12 0 0 1 12,-12 v -12 h -12 a 12,12 0 0 1 -12,12 v 12 z" />
+      <path
+         id="path102"
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         d="m 287.99999,260.00001 a 12,12 0 0 0 12,12 v 12 h -12 a 12,12 0 0 0 -12,-12 v -12 z" />
+      <path
+         id="path103"
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         d="m 223.99999,292.00001 a 12,12 0 0 0 12,12 v 12 h -12 a 12,12 0 0 0 -12,-12 v -12 z" />
+      <path
+         id="path104"
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         d="m 287.99999,316.00001 a 12,12 0 0 1 12,-12 v -12 h -12 a 12,12 0 0 1 -12,12 v 12 z" />
+      <path
+         id="path105"
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         d="m 191.99999,260.00001 a 12,12 0 0 0 12,12 v 12 h -12 a 12,12 0 0 0 -12,-12 v -12 z" />
+      <path
+         id="path106"
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         d="m 191.99999,316.00001 a 12,12 0 0 1 12,-12 v -12 h -12 a 12,12 0 0 1 -12,12 v 12 z" />
+      <path
+         id="path107"
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         d="m 319.99999,284.00001 a 12,12 0 0 1 12,-12 v -12 h -12 a 12,12 0 0 1 -12,12 v 12 z" />
+      <path
+         id="path108"
+         style="fill:#f2f6ff;fill-opacity:1;stroke-width:40;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+         d="m 319.99999,292.00001 a 12,12 0 0 0 12,12 v 12 h -12 a 12,12 0 0 0 -12,-12 v -12 z" />
+    </g>
+    <g
+       id="g118"
+       transform="translate(-64,-24)">
+      <circle
+         style="fill:#f74067;fill-opacity:1;stroke:none;stroke-width:100;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="path112"
+         cx="238.51656"
+         cy="383.93045"
+         r="31.99106" />
+      <circle
+         style="fill:#f74067;fill-opacity:1;stroke:none;stroke-width:47.934;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="circle112"
+         cx="225.03271"
+         cy="466.68414"
+         r="15.334546" />
+      <circle
+         style="fill:#f74067;fill-opacity:1;stroke:none;stroke-width:29.7521;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="circle113"
+         cx="299.06158"
+         cy="427.5546"
+         r="9.517993" />
+      <circle
+         style="fill:#f7365f;fill-opacity:1;stroke:none;stroke-width:58.6778;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="circle114"
+         cx="284.5202"
+         cy="464.83344"
+         r="18.771605" />
+      <circle
+         style="fill:#f7365f;fill-opacity:1;stroke:none;stroke-width:20.6612;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="circle115"
+         cx="213.66402"
+         cy="429.40536"
+         r="6.6097164" />
+      <circle
+         style="fill:#f72451;fill-opacity:1;stroke:none;stroke-width:42.1488;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="circle116"
+         cx="292.98068"
+         cy="360.66425"
+         r="13.483821" />
+      <circle
+         style="fill:#f72451;fill-opacity:1;stroke:none;stroke-width:17.3554;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="circle117"
+         cx="299.32602"
+         cy="400.32257"
+         r="5.5521541" />
+      <circle
+         style="fill:#f72451;fill-opacity:1;stroke:none;stroke-width:12.3967;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="circle118"
+         cx="254.90866"
+         cy="448.44135"
+         r="3.965816" />
+    </g>
+  </g>
+</svg>
