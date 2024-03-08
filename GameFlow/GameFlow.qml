@@ -265,7 +265,8 @@ FocusScope {
 	function getAverageAspectRatio() {
 		var numAspectRatios = 0;
 		var aspectRatioSum = 0;
-		for (var i = 0; i < currentCollection.games.count; i++) {
+		let aspectTests = currentCollection.games.count < 5 ? currentCollection.games.count : 5
+		for (var i = 0; i < aspectTests; i++) {
 			testAspectRatio.source = currentCollection.games.get(i).assets.boxFront;
 			if (testAspectRatio.sourceSize.width > 0 && testAspectRatio.sourceSize.height > 0) {
 				aspectRatioSum += testAspectRatio.sourceSize.width / testAspectRatio.sourceSize.height;
@@ -308,10 +309,10 @@ FocusScope {
 	}
 
 	function update() {
-		updateModel();
 		gameWidth = sw * 0.225 * Math.pow(averageAspectRatio, 0.6);
 		gameSpacing = gameWidth * -0.2
 		sideCount = Math.round((sw / 2) / (gameWidth + gameSpacing));
+		updateModel();
 		updateCurrentGame();
 	}
 }

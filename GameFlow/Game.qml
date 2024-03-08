@@ -23,6 +23,7 @@ Component {
 			anchors.bottom: parent.bottom
 
 			source: assets.boxFront || "../assets/no_game.png"
+			asynchronous: true
 
 			visible: false
 
