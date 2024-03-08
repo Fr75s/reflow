@@ -187,17 +187,19 @@ FocusScope {
 		property int selectionIndex: (currentIndex + (sideCount + 1)) % currentCollection.games.count
 
 		snapMode: PathView.SnapOneItem
-		//preferredHighlightBegin: 0.5
-		//preferredHighlightEnd: 0.5
+		//preferredHighlightBegin: 0
+		//preferredHighlightEnd: 0.3
 		highlightRangeMode: PathView.StrictlyEnforceRange
 		highlightMoveDuration: 300
 
 		pathItemCount: 3 + sideCount * 2
 		path: Path {
+			id: gameFlowPath
 			startX: (parent.width * 0.5) - (sideCount + 1) * (gameWidth + gameSpacing)
 			startY: 0
 
 			PathLine {
+				id: gameFlowPathLine
 				x: gameflowView.path.startX + gameflowView.pathItemCount * (gameWidth + gameSpacing)
 				y: gameflowView.path.startY
 			}

@@ -51,7 +51,7 @@ Rectangle {
 		height: parent.height * 0.5
 
 		anchors.top: parent.top
-		anchors.topMargin: parent.height * 0.1
+		anchors.topMargin: parent.height * 0.075
 		anchors.horizontalCenter: parent.horizontalCenter
 
 		text: gameflow.currentGame.title
@@ -75,6 +75,7 @@ Rectangle {
 		height: parent.height * 0.5
 
 		anchors.bottom: parent.bottom
+		anchors.bottomMargin: parent.height * 0.025
 
 		text: gameflow.flowProgress[0] + " of " + gameflow.flowProgress[1]
 		color: colors["text"]

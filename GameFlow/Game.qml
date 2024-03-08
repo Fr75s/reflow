@@ -28,7 +28,6 @@ Component {
 
 			Component.onCompleted: {
 				if (!assets.boxFront) {
-					console.log(title);
 					sourceSize.height = sourceSize.width * (1 / averageAspectRatio)
 				}
 			}
@@ -82,6 +81,8 @@ Component {
 				anchors.topMargin: 4
 
 				source: gameBoxArt.source
+
+				z: parent.z - 10
 
 				transform: Scale {
 					origin { x: width / 2; y: height / 2 }
