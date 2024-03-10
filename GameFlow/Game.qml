@@ -6,51 +6,98 @@ Component {
 	id: gameflowDelegate
 
 	Item {
-		width: gameWidth
-		height: width * (gameBoxArt.sourceSize.height / gameBoxArt.sourceSize.width)
+		id: effectHandlerContainer
 
-		z: (sideCount + 2) - Math.abs(gameflowView.realCurrentIndex - index);
+		width: gameWidth
+		height: averageAspectDeviance < 0.1 ? width * (gameBoxArt.sourceSize.height / gameBoxArt.sourceSize.width) : (width / averageAspectRatio)
+
+		property real averageAspectDeviance: assets.boxFront ? Math.abs((gameBoxArt.sourceSize.width / gameBoxArt.sourceSize.height) - averageAspectRatio) : 10
+
+		z: (sideCount + 2) - Math.abs(gameflowView.realCurrentIndex - index) + gameflowView.count;
 
 		property real leftRightCenter: gameflowView.realCurrentIndex === index ? 0 : (x + width / 2 > sw / 2 ? 2 : 1)
 
 		anchors.bottom: parent.bottom
 
-		Image {
-			id: gameBoxArt
+		Rectangle {
+			id: gameBoxArtContainer
+
 			width: parent.width
 			height: parent.height
 
+			anchors.horizontalCenter: parent.horizontalCenter
 			anchors.bottom: parent.bottom
-
-			source: assets.boxFront || "../assets/no_game.png"
-			asynchronous: true
 
 			visible: false
 
-			Component.onCompleted: {
-				if (!assets.boxFront) {
-					sourceSize.height = sourceSize.width * (1 / averageAspectRatio)
+			Image {
+				id: gameBoxArt
+				width: parent.width
+				height: parent.height
+
+				anchors.centerIn: parent
+
+				source: assets.boxFront || "../assets/no_game.png"
+				fillMode: Image.PreserveAspectFit
+				asynchronous: true
+
+				z: parent.z + 3
+
+				Component.onCompleted: {
+					if (!assets.boxFront) {
+						sourceSize.height = sourceSize.width * (1 / averageAspectRatio)
+					}
+				}
+			}
+
+			Image {
+				id: gameBoxArtBackBlurSource
+				width: parent.width
+				height: parent.height
+
+				anchors.centerIn: parent
+
+				source: assets.boxFront || "../assets/no_game.png"
+				fillMode: Image.PreserveAspectCrop
+				asynchronous: true
+			}
+
+			FastBlur {
+				anchors.fill: parent
+				source: gameBoxArtBackBlurSource
+				radius: 64
+
+				z: parent.z + 1
+
+				Rectangle {
+					anchors.fill: parent
+					color: "#80000000"
+					z: parent.z + 1
 				}
 			}
 		}
 
+
 		DropShadow {
 			id: gameDisplay
 
-			anchors.fill: gameBoxArt
+			anchors.fill: gameBoxArtContainer
+			z: parent.z + 7
+
 			horizontalOffset: 0
 			verticalOffset: 5
+
 			radius: 20
 			samples: 21
 			color: "#ff000000"
-			source: gameBoxArt
 
-			z: parent.z
+			source: gameBoxArtContainer
 
 			transform: Rotation {
 				id: shadowRotation
-				origin.x: width / 2;
-				origin.y: height / 2;
+
+				origin.x: gameBoxArtContainer.width / 2;
+				origin.y: gameBoxArtContainer.height / 2;
 
 				axis { x: 0; y: 1; z: 0 }
 				angle: leftRightCenter === 0 ? 0 : (leftRightCenter === 1 ? 30 : -30);
@@ -72,18 +119,18 @@ Component {
 				}
 			}
 
-			Image {
-				id: reflectionSource
-
-				width: gameBoxArt.width
-				height: gameBoxArt.height
+			Rectangle {
+				id: reflectionImage
 
 				anchors.top: parent.bottom
 				anchors.topMargin: 4
 
-				source: gameBoxArt.source
+				width: parent.width
+				height: parent.height
 
-				z: parent.z - 10
+				anchors.horizontalCenter: parent.horizontalCenter
+
+				z: parent.z - 7
 
 				transform: Scale {
 					origin { x: width / 2; y: height / 2 }
@@ -94,9 +141,50 @@ Component {
 					anchors.fill: parent
 					start: Qt.point(0, parent.height)
 					end: Qt.point(0, parent.height - 300)
+
+					z: parent.z + 4
+
 					gradient: Gradient {
 						GradientStop { position: 0.0; color: "#60000000" }
 						GradientStop { position: 1.0; color: "#d0000000" }
+					}
+				}
+
+				Image {
+					anchors.fill: parent
+
+					source: gameBoxArt.source
+					fillMode: Image.PreserveAspectFit
+
+					z: parent.z + 3
+
+					Component.onCompleted: {
+						console.log(title);
+						console.log(parent.z, z);
+					}
+				}
+
+				Image {
+					id: gameBoxArtShadowBackBlurSource
+					anchors.fill: parent
+
+					source: gameBoxArt.source
+					fillMode: Image.PreserveAspectCrop
+					asynchronous: true
+					visible: false
+				}
+
+				FastBlur {
+					anchors.fill: parent
+					source: gameBoxArtShadowBackBlurSource
+					radius: 64
+
+					z: parent.z + 1
+
+					Rectangle {
+						anchors.fill: parent
+						color: "#80000000"
+						z: parent.z + 1
 					}
 				}
 			}
