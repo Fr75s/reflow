@@ -263,22 +263,21 @@ FocusScope {
 	}
 
 	function getAverageAspectRatio() {
-		var numAspectRatios = 0;
-		var aspectRatioSum = 0;
-		let aspectTests = currentCollection.games.count < 5 ? currentCollection.games.count : 5
-		for (var i = 0; i < aspectTests; i++) {
-			testAspectRatio.source = currentCollection.games.get(i).assets.boxFront;
-			if (testAspectRatio.sourceSize.width > 0 && testAspectRatio.sourceSize.height > 0) {
-				aspectRatioSum += testAspectRatio.sourceSize.width / testAspectRatio.sourceSize.height;
-				numAspectRatios += 1;
+		if (currentCollection.shortName in defaultAspectRatios.data) {
+			return defaultAspectRatios.data[currentCollection.shortName];
+		} else {
+			var numAspectRatios = 0;
+			var aspectRatioSum = 0;
+			let aspectTests = currentCollection.games.count < 5 ? currentCollection.games.count : 5
+			for (var i = 0; i < aspectTests; i++) {
+				testAspectRatio.source = currentCollection.games.get(i).assets.boxFront;
+				if (testAspectRatio.sourceSize.width > 0 && testAspectRatio.sourceSize.height > 0) {
+					aspectRatioSum += testAspectRatio.sourceSize.width / testAspectRatio.sourceSize.height;
+					numAspectRatios += 1;
+				}
 			}
+			return numAspectRatios > 0 ? (aspectRatioSum / numAspectRatios) : (8 / 7);
 		}
-
-		if (currentCollection.shortName === "steam") {
-			return (92 / 43);
-		}
-
-		return numAspectRatios > 0 ? (aspectRatioSum / numAspectRatios) : (8 / 7);
 	}
 
 	function changeCollection(decrement) {
@@ -295,10 +294,6 @@ FocusScope {
 			}
 		}
 
-		// Set Game Height/Width here
-
-
-
 		// Update the model and currently selected game
 		update();
 
@@ -309,6 +304,7 @@ FocusScope {
 	}
 
 	function update() {
+		averageAspectRatio = getAverageAspectRatio();
 		gameWidth = sw * 0.225 * Math.pow(averageAspectRatio, 0.6);
 		gameSpacing = gameWidth * -0.2
 		sideCount = Math.round((sw / 2) / (gameWidth + gameSpacing));

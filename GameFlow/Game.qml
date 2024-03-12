@@ -155,13 +155,9 @@ Component {
 
 					source: gameBoxArt.source
 					fillMode: Image.PreserveAspectFit
+					asynchronous: true
 
 					z: parent.z + 3
-
-					Component.onCompleted: {
-						console.log(title);
-						console.log(parent.z, z);
-					}
 				}
 
 				Image {
@@ -170,6 +166,7 @@ Component {
 
 					source: gameBoxArt.source
 					fillMode: Image.PreserveAspectCrop
+
 					asynchronous: true
 					visible: false
 				}

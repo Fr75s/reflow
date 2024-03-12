@@ -86,6 +86,10 @@ FocusScope {
 
     // Actual Theme
 
+    AspectRatios {
+        id: defaultAspectRatios
+    }
+
     // FLOW
     GameFlow {
         id: gameflow
