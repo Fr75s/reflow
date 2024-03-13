@@ -15,6 +15,8 @@ FocusScope {
 	property int currentCollectionIndex: 0
 	property var currentCollection: api.collections.get(currentCollectionIndex)
 
+	property var preloadData: api.memory.get("preload");
+
 	//property var currentModel: currentCollection.games
 
 	property var flowProgress: [(gameflowView.selectionIndex) + 1, currentCollection.games.count]
@@ -154,7 +156,7 @@ FocusScope {
 
 
 
-	property real averageAspectRatio: getAverageAspectRatio();
+	property real averageAspectRatio: getAverageAspectRatio(currentCollection);
 	property real gameWidth: sw * 0.225 * Math.pow(averageAspectRatio, 0.6);
 	property real gameSpacing: gameWidth * -0.2
 
@@ -262,21 +264,37 @@ FocusScope {
 		visible: false
 	}
 
-	function getAverageAspectRatio() {
-		if (currentCollection.shortName in defaultAspectRatios.data) {
+	/* Gets the median aspect ratio.
+	 * Usually gets this value from the list of default aspect ratios or preloaded data.
+	 * If in neither, manually calculates it.
+	 */
+	function getAverageAspectRatio(collection, broadcastProgress = 0) {
+		if (collection.shortName in defaultAspectRatios.data) {
 			return defaultAspectRatios.data[currentCollection.shortName];
+		} else if (preloadData && collection.shortName in preloadData && "averageAspectRatio" in preloadData[collection.shortName]) {
+			return preloadData[collection.shortName]["averageAspectRatio"];
 		} else {
-			var numAspectRatios = 0;
-			var aspectRatioSum = 0;
-			let aspectTests = currentCollection.games.count < 5 ? currentCollection.games.count : 5
+			let aspectRatios = [];
+			let aspectTests = collection.games.count;
 			for (var i = 0; i < aspectTests; i++) {
-				testAspectRatio.source = currentCollection.games.get(i).assets.boxFront;
+				testAspectRatio.source = collection.games.get(i).assets.boxFront;
 				if (testAspectRatio.sourceSize.width > 0 && testAspectRatio.sourceSize.height > 0) {
-					aspectRatioSum += testAspectRatio.sourceSize.width / testAspectRatio.sourceSize.height;
-					numAspectRatios += 1;
+					aspectRatios.push(testAspectRatio.sourceSize.width / testAspectRatio.sourceSize.height);
+				}
+
+				// Broadcast to StatusScreen
+				if (broadcastProgress > 0) {
+					if (broadcastProgress > 1) {
+						// Broadcast to major progress bar
+						status.setMajorProgress((i + 1) / aspectTests);
+					} else {
+						// Broadcast to minor progress bar
+						status.setMinorProgress((i + 1) / aspectTests);
+					}
 				}
 			}
-			return numAspectRatios > 0 ? (aspectRatioSum / numAspectRatios) : (8 / 7);
+
+			return aspectRatios.length > 0 ? aspectRatios[Math.floor((aspectRatios.length - 1) / 2)] : (8 / 7);
 		}
 	}
 
@@ -304,11 +322,52 @@ FocusScope {
 	}
 
 	function update() {
-		averageAspectRatio = getAverageAspectRatio();
+		averageAspectRatio = getAverageAspectRatio(currentCollection);
 		gameWidth = sw * 0.225 * Math.pow(averageAspectRatio, 0.6);
 		gameSpacing = gameWidth * -0.2
 		sideCount = Math.round((sw / 2) / (gameWidth + gameSpacing));
 		updateModel();
 		updateCurrentGame();
+	}
+
+
+
+	Component.onCompleted: {
+		// Check for any needed preloads
+		console.log("A");
+		if (!preloadData) {
+			// Preload
+			preload();
+		}
+	}
+
+	function preload() {
+		status.showStatus("Preloading Collections...");
+		// Init with preexisting data
+		let newPreloadData = preloadData;
+		if (!preloadData) {
+			newPreloadData = {};
+		}
+		// Get preloaded data
+		for (let i = 0; i < api.collections.count; i++) {
+			let currentPCollection = api.collections.get(i);
+			// Preload Collections
+			if (!(currentPCollection.shortName in newPreloadData)) {
+				newPreloadData[currentPCollection.shortName] = {};
+			}
+			// Preload Average Aspect Ratio
+			if (!(currentPCollection.shortName in defaultAspectRatios.data) && !("averageAspectRatio" in newPreloadData[currentPCollection.shortName])) {
+				status.toggleMinorProgress();
+				newPreloadData[currentPCollection.shortName]["averageAspectRatio"] = getAverageAspectRatio(currentPCollection, 1);
+				status.toggleMinorProgress();
+			}
+			// Update progress
+			status.setMajorProgress((i + 1) / api.collections.count);
+		}
+		// Write to storage
+		api.memory.set("preload", newPreloadData);
+		preloadData = newPreloadData;
+		// Hide status screen
+		status.hideStatus();
 	}
 }

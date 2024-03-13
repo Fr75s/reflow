@@ -47,6 +47,9 @@ FocusScope {
         "planet": {
             "light": {
                 "plainBG": "#F2F6FF", // Used as the flat background color
+                "bg2": "#DBDFE7",
+                "bg3": "#BDC0C7",
+                "mid": "#7c7f8e",
                 "text": "#16171A", // Used as the text color
                 "accent": "#74AAFF", // Used as the accent color (slider circles in settings)
                 "barBG": "#000000", // Used as the bottom bar color
@@ -54,6 +57,9 @@ FocusScope {
             },
             "dark": {
                 "plainBG": "#16171A",
+                "bg2": "#26282D",
+                "bg3": "#31333A",
+                "mid": "#7c7f8e",
                 "text": "#F2F6FF",
                 "accent": "#74AAFF",
                 "barBG": "#000000",
@@ -88,6 +94,10 @@ FocusScope {
 
     AspectRatios {
         id: defaultAspectRatios
+    }
+
+    StatusScreen {
+        id: status
     }
 
     // FLOW

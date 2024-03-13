@@ -3,11 +3,11 @@
 x: Add details screen for each game
 x: Modify top section
 
-# 0.1.1 TODO
+# 0.1.1
 
-x: Get median average aspect ratio instead of mean
-x: Store average aspect ratios of common consoles
-x: Other performance enhancements?
+- Get median average aspect ratio instead of mean
+- Store average aspect ratios of common consoles
+- Preloading process implemented (right now, only gets median aspect ratio for each console not in default aspect ratios)
 
 # 0.1.0
 
