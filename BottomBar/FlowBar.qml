@@ -54,7 +54,7 @@ Rectangle {
 		anchors.topMargin: parent.height * 0.075
 		anchors.horizontalCenter: parent.horizontalCenter
 
-		text: gameflow.currentGame.title
+		text: gameflow.currentGame ? gameflow.currentGame.title : ""
 		color: colors["text"]
 
 		elide: Text.ElideRight

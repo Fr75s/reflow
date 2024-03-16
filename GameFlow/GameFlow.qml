@@ -334,10 +334,28 @@ FocusScope {
 
 	Component.onCompleted: {
 		// Check for any needed preloads
-		console.log("A");
+		// Check if previous preloaded data exists
 		if (!preloadData) {
 			// Preload
 			preload();
+		} else {
+			let doPreload = false;
+			let preloadKeys = Object.keys(preloadData);
+			for (let i = 0; i < preloadKeys.length; i++) {
+				let preloadedCollection = preloadData[preloadKeys[i]];
+				// Check if games field does not exist or is not the same
+				if (!("games" in preloadedCollection)) {
+					doPreload = true;
+					break;
+				} else if (preloadedCollection["games"] != api.collections.get(i).games.toVarArray()) {
+					doPreload = true;
+					break;
+				}
+				i++;
+			}
+			if (doPreload) {
+				preload();
+			}
 		}
 	}
 
@@ -350,10 +368,21 @@ FocusScope {
 		}
 		// Get preloaded data
 		for (let i = 0; i < api.collections.count; i++) {
-			let currentPCollection = api.collections.get(i);
+			const currentPCollection = api.collections.get(i);
 			// Preload Collections
 			if (!(currentPCollection.shortName in newPreloadData)) {
 				newPreloadData[currentPCollection.shortName] = {};
+			}
+			// Preload Games
+			// Get var array of games
+			let currentPCollectionGames = currentPCollection.games.toVarArray();
+			// Check if needed
+			if (!("games" in newPreloadData[currentPCollection.shortName]) || (newPreloadData[currentPCollection.shortName]["games"] != currentPCollectionGames)) {
+				// Fill with all game titles
+				newPreloadData[currentPCollection.shortName]["games"] = [];
+				for (let i = 0; i < currentPCollectionGames.length; i++) {
+					newPreloadData[currentPCollection.shortName]["games"].push(currentPCollectionGames[i].title);
+				}
 			}
 			// Preload Average Aspect Ratio
 			if (!(currentPCollection.shortName in defaultAspectRatios.data) && !("averageAspectRatio" in newPreloadData[currentPCollection.shortName])) {

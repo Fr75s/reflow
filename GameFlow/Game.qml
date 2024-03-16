@@ -24,10 +24,12 @@ Component {
 
 			width: parent.width
 			height: parent.height
+			z: parent.z
 
 			anchors.horizontalCenter: parent.horizontalCenter
 			anchors.bottom: parent.bottom
 
+			color: "transparent"
 			visible: false
 
 			Image {
@@ -48,14 +50,18 @@ Component {
 						sourceSize.height = sourceSize.width * (1 / averageAspectRatio)
 					}
 				}
+
+				onStatusChanged: {
+					if (status === Image.Ready && assets.boxFront) {
+						gameBoxArtBackBlur.visible = Math.abs((gameBoxArt.sourceSize.width / gameBoxArt.sourceSize.height) - averageAspectRatio) >= 0.1
+					}
+				}
 			}
 
 			Image {
 				id: gameBoxArtBackBlurSource
-				width: parent.width
-				height: parent.height
-
-				anchors.centerIn: parent
+				anchors.fill: parent
+				visible: false
 
 				source: assets.boxFront || "../assets/no_game.png"
 				fillMode: Image.PreserveAspectCrop
@@ -63,6 +69,7 @@ Component {
 			}
 
 			FastBlur {
+				id: gameBoxArtBackBlur
 				anchors.fill: parent
 				source: gameBoxArtBackBlurSource
 				radius: 64
@@ -71,8 +78,9 @@ Component {
 
 				Rectangle {
 					anchors.fill: parent
-					color: "#80000000"
 					z: parent.z + 1
+
+					color: "#80000000"
 				}
 			}
 		}

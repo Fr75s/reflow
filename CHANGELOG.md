@@ -8,6 +8,7 @@ x: Modify top section
 - Get median average aspect ratio instead of mean
 - Store average aspect ratios of common consoles
 - Preloading process implemented (right now, only gets median aspect ratio for each console not in default aspect ratios)
+- New logo
 
 # 0.1.0
 
