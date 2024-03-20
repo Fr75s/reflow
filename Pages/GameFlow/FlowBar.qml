@@ -11,8 +11,6 @@ Rectangle {
 	width: parent.width
 	height: parent.height * 0.1
 
-	visible: settings["theme"] === "retro"
-
 	anchors.bottom: parent.bottom
 
 	// Back Blur

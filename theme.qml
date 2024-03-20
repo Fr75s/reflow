@@ -6,7 +6,8 @@ import QtQuick.Window 2.15
 
 import SortFilterProxyModel 0.2
 
-import "GameFlow"
+import "Pages"
+import "Pages/GameFlow"
 import "BottomBar"
 import "Extra"
 
@@ -40,30 +41,35 @@ FocusScope {
         "btnScheme": api.memory.has("btnScheme") ? api.memory.get("btnScheme") : "ps",
 
         "24hClock": api.memory.has("24hClock") ? api.memory.get("24hClock") : false,
-        "light": api.memory.has("light") ? api.memory.get("light") : false
+        "light": api.memory.has("light") ? api.memory.get("light") : false,
+
+        "carousel_zoom": api.memory.has("carousel_zoom") ? api.memory.get("carousel_zoom") : 1,
+        "carousel_up_menu": api.memory.has("carousel_up_menu") ? api.memory.get("carousel_up_menu") : true,
     }
 
     property var colorschemes: {
         "planet": {
             "light": {
-                "plainBG": "#F2F6FF", // Used as the flat background color
-                "bg2": "#DBDFE7",
-                "bg3": "#BDC0C7",
-                "mid": "#7c7f8e",
-                "text": "#16171A", // Used as the text color
-                "accent": "#74AAFF", // Used as the accent color (slider circles in settings)
-                "barBG": "#000000", // Used as the bottom bar color
-                "bottomIcons": "#F2F6FF", // Used as the color of the bottom bar icons
+                bg1: "#F2F6FF", // Used as the flat background color
+                bg2: "#DBDFE7",
+                bg3: "#BDC0C7",
+                bg4: "#989ba1",
+                mid: "#7c7f8e",
+                text: "#16171A", // Used as the text color
+                accent: "#74AAFF", // Used as the accent color (slider circles in settings)
+                barBG: "#000000", // Used as the bottom bar color
+                bottomIcons: "#F2F6FF", // Used as the color of the bottom bar icons
             },
             "dark": {
-                "plainBG": "#16171A",
-                "bg2": "#26282D",
-                "bg3": "#31333A",
-                "mid": "#7c7f8e",
-                "text": "#F2F6FF",
-                "accent": "#74AAFF",
-                "barBG": "#000000",
-                "bottomIcons": "#F2F6FF",
+                bg1: "#16171A",
+                bg2: "#26282D",
+                bg3: "#31333A",
+                bg4: "#494D57",
+                mid: "#7c7f8e",
+                text: "#F2F6FF",
+                accent: "#74AAFF",
+                barBG: "#000000",
+                bottomIcons: "#F2F6FF",
             }
         }
     }
@@ -89,44 +95,140 @@ FocusScope {
 	// Alias for the object that is the localization's current language
 	property var loc: localizationData.getLocalization(currentLanguage)
 
-
-    // Actual Theme
-
+    // Extra Data
+    // Default box aspect ratios
     AspectRatios {
         id: defaultAspectRatios
     }
 
+    // Missing game image
+    property url missingSource: "assets/no_game.png"
+
+
+    // Actual Theme
+
+    property int screen: 2
+
+    // Status Screen
     StatusScreen {
         id: status
     }
 
-    // FLOW
-    GameFlow {
-        id: gameflow
-        focus: visible
+    MainMenu {
+        id: mainmenu
+
+        y: (screen == 0) ? 0 : -sh
+        focus: y == 0
+        Behavior on y {
+            NumberAnimation {
+                easing.type: Easing.InOutCubic
+                duration: 400
+            }
+        }
+
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 
+    // FLOW
+    Item {
+        width: parent.width
+        height: parent.height
+        x: 0
+        y: (screen != 0) ? 0 : sh
+        Behavior on y {
+            NumberAnimation {
+                easing.type: Easing.InOutCubic
+                duration: 400
+            }
+        }
 
+        Settings {
+            id: settings
+            focus: (screen == 1)
+            opacity: focus ? 1 : 0
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 400
+                }
+            }
+        }
 
-    // Lower Bars
-    FlowBar {
-        id: gameInfoBar
+        GameFlow {
+            id: gameflow
+            focus: (screen == 2)
+            opacity: focus ? 1 : 0
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 400
+                }
+            }
+        }
+
+        FlowBar {
+            opacity: gameflow.focus ? 1 : 0
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 400
+                }
+            }
+        }
+
+        Keys.onPressed: {
+            if (api.keys.isCancel(event)) {
+                event.accepted = true;
+                if (screen > 0) {
+                    screen = 0;
+                }
+            }
+        }
     }
 
     // The Background
+    Image {
+        width: parent.width
+        height: parent.height * 3
+
+        x: 0
+        y: (screen == 0) ? 0 : -sh
+        Behavior on y {
+            NumberAnimation {
+                easing.type: Easing.InOutQuad
+                duration: 400
+            }
+        }
+        z: -14
+
+        source: "assets/art/blurs.png"
+        opacity: 0.65
+        mipmap: true
+    }
+
 	Rectangle {
 		id: background
 		z: -15
-		color: colors["plainBG"]
+		color: colors.bg1
 		anchors.fill: parent
 	}
 
 
 
+    // Actions
 
 
     // Launching a game
     function launchGame(game) {
 		game.launch();
 	}
+
+	// Adds an opacity to a color.
+	// Opacity is a hex integer represented as a string from 0x00 to 0xff.
+	function ocolor(color, opacity) {
+        let newColor = color;
+        if (color.substring(0, 1) === "#") {
+            newColor = color.substring(1);
+        }
+        newColor = opacity + newColor;
+        newColor = "#" + newColor;
+        return newColor;
+    }
 }

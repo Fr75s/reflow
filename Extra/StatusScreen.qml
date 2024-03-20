@@ -10,7 +10,7 @@ Rectangle {
 	property real majorProgress: 0
 	property real minorProgress: 0
 
-	color: colors["plainBG"]
+	color: colors.bg1
 	opacity: 0
 	enabled: (opacity == 1)
 
@@ -72,7 +72,7 @@ Rectangle {
 			pixelSize: parent.height * 0.035
 		}
 
-		color: colors["text"]
+		color: colors.text
 	}
 
 

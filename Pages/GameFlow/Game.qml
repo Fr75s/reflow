@@ -39,7 +39,7 @@ Component {
 
 				anchors.centerIn: parent
 
-				source: assets.boxFront || "../assets/no_game.png"
+				source: assets.boxFront || missingSource
 				fillMode: Image.PreserveAspectFit
 				asynchronous: true
 
@@ -63,7 +63,7 @@ Component {
 				anchors.fill: parent
 				visible: false
 
-				source: assets.boxFront || "../assets/no_game.png"
+				source: gameBoxArt.source
 				fillMode: Image.PreserveAspectCrop
 				asynchronous: true
 			}

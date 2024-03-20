@@ -8,8 +8,6 @@ import SortFilterProxyModel 0.2
 
 FocusScope {
 
-	id: gameflow
-
 	anchors.fill: parent
 
 	property int currentCollectionIndex: 0
@@ -46,7 +44,7 @@ FocusScope {
 		width: parent.width * .9
 
 		text: currentCollection.name
-		color: colors["text"]
+		color: colors.text
 
 		font {
 			family: display.name
@@ -84,7 +82,7 @@ FocusScope {
 				pixelSize: parent.height
 			}
 
-			color: colors["text"]
+			color: colors.text
 
 			function getBatteryIcon() {
 				if (!isNaN(api.device.batteryPercent)) {
@@ -113,7 +111,7 @@ FocusScope {
 				pixelSize: parent.height * 0.8
 			}
 
-			color: colors["text"]
+			color: colors.text
 
 			function getBatteryPercent() {
 				if (!isNaN(api.device.batteryPercent)) {
@@ -136,7 +134,7 @@ FocusScope {
 				pixelSize: parent.height * 0.8
 			}
 
-			color: colors["text"]
+			color: colors.text
 
 			function set() {
 				currentTime.text = settings["24hClock"] ? Qt.formatTime(new Date(), "hh:mm") : Qt.formatTime(new Date(), "hh:mm AP");
@@ -180,7 +178,7 @@ FocusScope {
 		anchors.bottom: parent.bottom
 		anchors.bottomMargin: parent.height * 0.3
 
-		focus: visible
+		focus: parent.focus
 
 		model: currentModel
 		delegate: Game { }
@@ -209,6 +207,7 @@ FocusScope {
 
 		Keys.onLeftPressed: { decrementCurrentIndex() }
 		Keys.onRightPressed: { incrementCurrentIndex() }
+		Keys.onUpPressed: { screen = 0 }
 
         Keys.onPressed: {
 			if (api.keys.isAccept(event)) {
@@ -240,6 +239,8 @@ FocusScope {
 		color: "black"
 		opacity: 0.5
 	}
+
+
 
 	function updateModel() {
 		// Reset Model

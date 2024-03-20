@@ -5,7 +5,17 @@ Item {
 
 	property var localization: {
 		"en": {
+			settings_subpages: "Subsections",
 
+			settings_subpage_appearance: "Appearance",
+			settings_appearance_lightmode: "Light Mode",
+			settings_appearance_zoom: "Interface Zoom",
+
+			settings_subpage_behavior: "Behavior",
+			settings_behavior_carouselup: "Up → Main Menu",
+
+			settings_other: "Other Settings",
+			settings_theme: "Theme",
 		}
 	}
 
