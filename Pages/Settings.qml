@@ -127,7 +127,7 @@ FocusScope {
 		width: parent.width
 		height: parent.height * 0.025
 
-		text: curPage
+		text: formatCurPage()
 		color: colors.text
 		horizontalAlignment: Text.AlignHCenter
 		verticalAlignment: Text.AlignVCenter
@@ -136,6 +136,22 @@ FocusScope {
 			family: display.name
 			weight: Font.Light
 			pixelSize: height
+		}
+
+		function formatCurPage() {
+			if (curPage === "/") {
+				return "Main Page";
+			} else {
+				let out = "";
+				let components = curPage.substring(1, curPage.length - 1).split("/");
+				for (let i = 0; i < components.length; i++) {
+					out += components[i].substring(0, 1).toUpperCase() + components[i].substring(1).toLowerCase();
+					if (i < components.length - 1) {
+						out += " » ";
+					}
+				}
+				return out;
+			}
 		}
 	}
 
