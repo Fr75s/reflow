@@ -387,9 +387,16 @@ FocusScope {
 			}
 			// Preload Average Aspect Ratio
 			if (!(currentPCollection.shortName in defaultAspectRatios.data) && !("averageAspectRatio" in newPreloadData[currentPCollection.shortName])) {
-				status.toggleMinorProgress();
-				newPreloadData[currentPCollection.shortName]["averageAspectRatio"] = getAverageAspectRatio(currentPCollection, 1);
-				status.toggleMinorProgress();
+				// If x-aar is present & valid, set average aspect ratio to that
+				if ("extra" in currentPCollection && "aar" in currentPCollection.extra && !isNaN(currentPCollection.extra.aar) && (currentPCollection.extra.aar > 0)) {
+					// Valid x-aar present, use that
+					newPreloadData[currentPCollection.shortName]["averageAspectRatio"] = currentPCollection.extra.aar;
+				} else {
+					// No valid x-aar, calculate manually
+					status.toggleMinorProgress();
+					newPreloadData[currentPCollection.shortName]["averageAspectRatio"] = getAverageAspectRatio(currentPCollection, 1);
+					status.toggleMinorProgress();
+				}
 			}
 			// Update progress
 			status.setMajorProgress((i + 1) / api.collections.count);

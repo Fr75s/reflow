@@ -2,12 +2,9 @@ import QtQuick 2.15
 
 
 FocusScope {
-
 	id: settings
 
 	anchors.fill: parent
-
-
 
 	/* Contains all of the data for each setting, as well as layout data.
 	 *
@@ -47,6 +44,12 @@ FocusScope {
 			header: loc.settings_subpages,
 			items: [
 				{
+					type: "page",
+					id: "t2l_subpage",
+					name: "Temporary 2nd Level Subpage",
+					items: []
+				},
+				{
 					type: "setting_bin",
 					name: loc.settings_appearance_lightmode,
 					setting: "light"
@@ -79,6 +82,11 @@ FocusScope {
 			header: loc.settings_other,
 			setting: "theme",
 			list: themes
+		},
+		{
+			type: "setting_bin",
+			name: "aa",
+			setting: "aa"
 		}
 	]
 
@@ -99,46 +107,251 @@ FocusScope {
 		}
 	}
 
+	Text {
+		id: title
+		anchors.top: parent.top
+		anchors.topMargin: parent.height * 0.05
+
+		width: parent.width
+		height: parent.height * 0.05
+
+		text: "Settings"
+		color: colors.text
+		horizontalAlignment: Text.AlignHCenter
+		verticalAlignment: Text.AlignVCenter
+
+		font {
+			family: display.name
+			weight: Font.Medium
+			pixelSize: height
+		}
+	}
+
+	Text {
+		id: settingsPathDisplay
+		anchors.top: title.bottom
+		anchors.topMargin: parent.height * 0.025
+
+		width: parent.width
+		height: parent.height * 0.025
+
+		text: curPage
+		color: colors.text
+		horizontalAlignment: Text.AlignHCenter
+		verticalAlignment: Text.AlignVCenter
+
+		font {
+			family: display.name
+			weight: Font.Light
+			pixelSize: height
+		}
+	}
 
 	ListView {
-		width: parent.width * 0.9
+		id: settingView
+		width: parent.width * 0.9 > 1000 ? 1000 : parent.width * 0.9
 		height: parent.height * 0.8
+
+		focus: parent.focus
 
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.bottom: parent.bottom
 
 		model: settingModel
+
+		delegate: Item {
+			id: settingBox
+			width: ListView.view.width
+			height: header ? settingRectContainer.height + settingHeaderLabel.height : settingRectContainer.height
+
+			property bool selected: settingView.currentIndex === index
+			property real selectedMargin: settingRectContainer.height * 0.1
+
+			Text {
+				id: settingHeaderLabel
+				anchors.left: parent.left
+				anchors.leftMargin: 0
+				anchors.top: parent.top
+
+				width: parent.width
+				height: settings.height * 0.05
+
+				text: header ? header : ""
+				color: colors.text
+				horizontalAlignment: Text.AlignLeft
+				verticalAlignment: Text.AlignVCenter
+
+				font {
+					family: display.name
+					weight: Font.Medium
+					pixelSize: settings.height * 0.03
+				}
+			}
+
+			Rectangle {
+				width: parent.width
+				height: 2
+				radius: height / 2
+
+				anchors.top: settingHeaderLabel.verticalCenter
+				anchors.topMargin: settingHeaderLabel.font.pixelSize / 2
+				visible: header ? true : false
+			}
+
+			Item {
+				id: settingRectContainer
+				width: parent.width
+				height: settings.height * 0.1
+
+				anchors.bottom: parent.bottom
+
+				Rectangle {
+					id: settingRect
+					anchors.fill: parent
+					anchors.margins: selected ? 0 : selectedMargin
+					Behavior on anchors.margins {
+						NumberAnimation {
+							easing.type: Easing.OutCubic
+							duration: 200
+						}
+					}
+
+					color: selected ? ocolor(colors.bg4, "80") : ocolor(colors.bg2, "80")
+					Behavior on color {
+						ColorAnimation {
+							easing.type: Easing.OutCubic
+							duration: 200
+						}
+					}
+
+					border {
+						width: 1
+						color: colors.mid
+					}
+
+					radius: height / 8
+
+					Text {
+						anchors.left: parent.left
+						anchors.leftMargin: selectedMargin * 2
+						anchors.verticalCenter: parent.verticalCenter
+
+						width: parent.width - selectedMargin * 4
+						height: settingRectContainer.height * 0.35
+
+						text: name
+						color: colors.text
+						horizontalAlignment: Text.AlignLeft
+						verticalAlignment: Text.AlignVCenter
+
+						font {
+							family: display.name
+							weight: Font.Light
+							pixelSize: height
+						}
+					}
+
+					Image {
+						width: height
+						height: settingRectContainer.height * 0.35
+
+						anchors.right: parent.right
+						anchors.rightMargin: selectedMargin * 2.5
+						anchors.verticalCenter: parent.verticalCenter
+
+						source: "../assets/icon/folder.png"
+						mipmap: true
+						asynchronous: true
+						visible: (type === "page")
+					}
+				}
+			}
+		}
+
+		Keys.onPressed: {
+			if (api.keys.isAccept(event)) {
+				event.accepted = true;
+				settingInteraction(currentIndex);
+			}
+
+			if (api.keys.isCancel(event)) {
+				event.accepted = true;
+				if (curPage === "/") {
+					screen = 0;
+				} else {
+					goToParentPage();
+				}
+			}
+
+			// Scroll to next header.
+			// If end of page reached, scroll to top
+			// If no headers present, scroll to top
+			if (api.keys.isDetails(event)) {
+				event.accepted = true;
+				do {
+					if (currentIndex === count - 1) {
+						currentIndex = 0;
+					} else {
+						incrementCurrentIndex();
+					}
+				} while (currentIndex > 0 && settingModel.get(currentIndex).header === undefined);
+			}
+		}
+
+		Keys.onUpPressed: {
+			if (currentIndex === 0) {
+				if (curPage === "/") {
+					screen = 0;
+				}
+			} else {
+				decrementCurrentIndex();
+			}
+		}
+
+		Keys.onDownPressed: {
+			if (currentIndex === count - 1) {
+				currentIndex = 0;
+			} else {
+				incrementCurrentIndex();
+			}
+		}
 	}
 
 
 
-	function goToChildPage(childID) {
-		let idxOfChild = getIndexOfChildPage(curPage.split("/").pop(), curPageContents);
-		if (idxOfChild >= 0) {
-			curPage += "/" + childID;
-			curPageContents = curPageContents[idxOfChild].items;
+	function settingInteraction(index) {
+		let metaSetting = settingModel.get(index);
+		switch (metaSetting.type) {
+			case "page":
+				goToChildPage(metaSetting.id);
+				break;
 		}
+	}
+
+	function goToChildPage(childID) {
+		curPage += childID + "/";
+		curPageContents = curPageContents[getIndexOfChildPage(childID, curPageContents)].items;
 		refreshModel();
 	}
 
 	function goToParentPage() {
 		if (curPage !== "/") {
-			curPage = curPage.substring(0, curPage.lastIndexOf("/"));
+			curPage = curPage.substring(0, curPage.lastIndexOf("/", curPage.length - 2) + 1);
 			curPageContents = settingData;
 
 			let directory = curPage.split("/");
-			for (let i = 1; i < directory.length; i++) {
+			for (let i = 1; i < directory.length - 1; i++) {
 				let idxOfChild = getIndexOfChildPage(directory[i], curPageContents);
 				curPageContents = curPageContents[idxOfChild].items;
 			}
+			refreshModel();
 		}
-		refreshModel();
 	}
 
 	function getIndexOfChildPage(pageID, contents) {
 		for (let i = 0; i < contents.length; i++) {
 			if ("id" in contents[i] && contents[i].id === pageID) {
-				return true;
+				return i;
 			}
 		}
 		return -1;
