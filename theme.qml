@@ -56,6 +56,7 @@ FocusScope {
                 bg4: "#989ba1",
                 mid: "#7c7f8e",
                 text: "#16171A", // Used as the text color
+                subtext: "#31333A",
                 accent: "#74AAFF", // Used as the accent color (slider circles in settings)
                 barBG: "#000000", // Used as the bottom bar color
                 bottomIcons: "#F2F6FF", // Used as the color of the bottom bar icons
@@ -67,6 +68,7 @@ FocusScope {
                 bg4: "#494D57",
                 mid: "#7c7f8e",
                 text: "#F2F6FF",
+                subtext: "#BDC0C7",
                 accent: "#74AAFF",
                 barBG: "#000000",
                 bottomIcons: "#F2F6FF",
@@ -114,6 +116,7 @@ FocusScope {
         id: status
     }
 
+    // Main Menu
     MainMenu {
         id: mainmenu
 
@@ -129,10 +132,12 @@ FocusScope {
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
-    // FLOW
+    // Interaction Screens
     Item {
         width: parent.width
         height: parent.height
+
+        // If screen = 0 position below view, else position on screen
         x: 0
         y: (screen != 0) ? 0 : sh
         Behavior on y {
@@ -142,8 +147,9 @@ FocusScope {
             }
         }
 
+        // Settings page
         Settings {
-            id: settings
+            id: settingsPG
             focus: (screen == 1)
             opacity: focus ? 1 : 0
             Behavior on opacity {
@@ -151,8 +157,13 @@ FocusScope {
                     duration: 400
                 }
             }
+
+            onSettingChanged: {
+                gameflow.settingChanged(setting);
+            }
         }
 
+        // GameFlow page
         GameFlow {
             id: gameflow
             focus: (screen == 2)
@@ -164,6 +175,7 @@ FocusScope {
             }
         }
 
+        // GameFlow flowbar (separate as shaders do not work properly when included)
         FlowBar {
             opacity: gameflow.focus ? 1 : 0
             Behavior on opacity {
@@ -173,6 +185,7 @@ FocusScope {
             }
         }
 
+        // Back on screen = main menu (unless back action otherwise occupied)
         Keys.onPressed: {
             if (api.keys.isCancel(event)) {
                 event.accepted = true;
@@ -184,6 +197,7 @@ FocusScope {
     }
 
     // The Background
+    // Background Gradients
     Image {
         width: parent.width
         height: parent.height * 3
@@ -203,6 +217,7 @@ FocusScope {
         mipmap: true
     }
 
+    // Background Back Layer
 	Rectangle {
 		id: background
 		z: -15
@@ -214,8 +229,7 @@ FocusScope {
 
     // Actions
 
-
-    // Launching a game
+    // Launch a game
     function launchGame(game) {
 		game.launch();
 	}

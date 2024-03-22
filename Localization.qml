@@ -6,6 +6,7 @@ Item {
 	property var localization: {
 		"en": {
 			settings_subpages: "Subsections",
+			settings_header_general: "General",
 
 			settings_subpage_appearance: "Appearance",
 			settings_appearance_lightmode: "Light Mode",

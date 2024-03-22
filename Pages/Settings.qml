@@ -1,8 +1,8 @@
 import QtQuick 2.15
-
+import QtGraphicalEffects 1.15
 
 FocusScope {
-	id: settings
+	id: settingsRoot
 
 	anchors.fill: parent
 
@@ -44,12 +44,6 @@ FocusScope {
 			header: loc.settings_subpages,
 			items: [
 				{
-					type: "page",
-					id: "t2l_subpage",
-					name: "Temporary 2nd Level Subpage",
-					items: []
-				},
-				{
 					type: "setting_bin",
 					name: loc.settings_appearance_lightmode,
 					setting: "light"
@@ -57,9 +51,9 @@ FocusScope {
 				{
 					type: "setting_range",
 					name: loc.settings_appearance_zoom,
-					setting: "zoom",
-					lower: 0.5,
-					upper: 1.2,
+					setting: "carousel_zoom",
+					minVal: 0.5,
+					maxVal: 1.2,
 					step: 0.1
 				}
 			]
@@ -72,6 +66,7 @@ FocusScope {
 				{
 					type: "setting_bin",
 					name: loc.settings_behavior_carouselup,
+					header: loc.settings_header_general,
 					setting: "carousel_up_menu"
 				},
 			]
@@ -82,13 +77,10 @@ FocusScope {
 			header: loc.settings_other,
 			setting: "theme",
 			list: themes
-		},
-		{
-			type: "setting_bin",
-			name: "aa",
-			setting: "aa"
 		}
 	]
+
+	signal settingChanged(string setting);
 
 	property string curPage: "/"
 	property var curPageContents: settingData
@@ -167,14 +159,15 @@ FocusScope {
 			property bool selected: settingView.currentIndex === index
 			property real selectedMargin: settingRectContainer.height * 0.1
 
+			// Header text
 			Text {
 				id: settingHeaderLabel
 				anchors.left: parent.left
-				anchors.leftMargin: 0
+				anchors.leftMargin: selectedMargin
 				anchors.top: parent.top
 
 				width: parent.width
-				height: settings.height * 0.05
+				height: settingsRoot.height * 0.05
 
 				text: header ? header : ""
 				color: colors.text
@@ -184,10 +177,11 @@ FocusScope {
 				font {
 					family: display.name
 					weight: Font.Medium
-					pixelSize: settings.height * 0.03
+					pixelSize: settingsRoot.height * 0.03
 				}
 			}
 
+			// Header underline
 			Rectangle {
 				width: parent.width
 				height: 2
@@ -196,12 +190,15 @@ FocusScope {
 				anchors.top: settingHeaderLabel.verticalCenter
 				anchors.topMargin: settingHeaderLabel.font.pixelSize / 2
 				visible: header ? true : false
+
+				color: colors.subtext
 			}
 
+			// Position the actual setting rectangle in a container to make anchors.margins easy
 			Item {
 				id: settingRectContainer
 				width: parent.width
-				height: settings.height * 0.1
+				height: settingsRoot.height * 0.1
 
 				anchors.bottom: parent.bottom
 
@@ -229,8 +226,9 @@ FocusScope {
 						color: colors.mid
 					}
 
-					radius: height / 8
+					radius: height / 6
 
+					// Setting name
 					Text {
 						anchors.left: parent.left
 						anchors.leftMargin: selectedMargin * 2
@@ -251,29 +249,118 @@ FocusScope {
 						}
 					}
 
-					Image {
-						width: height
+					// Container for icons
+					Item {
+						width: (type === "setting_list") ? height * 4 : height
 						height: settingRectContainer.height * 0.35
 
 						anchors.right: parent.right
 						anchors.rightMargin: selectedMargin * 2.5
 						anchors.verticalCenter: parent.verticalCenter
 
-						source: "../assets/icon/folder.png"
-						mipmap: true
-						asynchronous: true
-						visible: (type === "page")
+						// TYPE = page
+						// Folder Icon
+						Image {
+							id: pageIcon
+							anchors.fill: parent
+
+							source: "../assets/icon/folder.png"
+							mipmap: true
+							asynchronous: true
+							visible: false
+						}
+						ColorOverlay {
+							anchors.fill: pageIcon
+							source: pageIcon
+							color: colors.text
+							visible: (type === "page")
+						}
+
+						// TYPE = setting_bin
+						// Toggle switch icon
+						Rectangle {
+							anchors.verticalCenter: parent.verticalCenter
+							width: parent.width
+							height: parent.height * 0.1
+							radius: height / 2
+
+							color: colors.subtext
+							visible: (type === "setting_bin")
+						}
+						Rectangle {
+							anchors.verticalCenter: parent.verticalCenter
+							width: height
+							height: parent.height * 0.6
+							radius: height / 2
+
+							x: settings[setting] ? parent.width - width : 0
+							Behavior on x {
+								NumberAnimation {
+									easing.type: Easing.OutCubic
+									duration: 250
+								}
+							}
+
+							visible: (type === "setting_bin")
+						}
+
+						// TYPE = setting_range + TYPE = setting_list
+						// Value label
+						Text {
+							anchors.fill: parent
+							color: colors.text
+
+							horizontalAlignment: (type === "setting_list") ? Text.AlignRight: Text.AlignHCenter
+							verticalAlignment: Text.AlignVCenter
+
+							text: (type === "setting_range") ? formatRangeStr() : (settings[setting] ? settings[setting] : "")
+
+							visible: (type === "setting_list") || (type === "setting_range")
+
+							font {
+								family: display.name
+								weight: Font.Light
+								pixelSize: height / 2
+							}
+
+							function formatRangeStr() {
+								let out = settings[setting];
+								if (settings[setting] > settingModel.get(index).minVal) {
+									out = "« " + out;
+								}
+								if (settings[setting] < settingModel.get(index).maxVal) {
+									out += " »";
+								}
+								return out;
+							}
+						}
+					}
+				}
+
+				// Mouse Interactivity
+				MouseArea {
+					anchors.fill: parent
+					onClicked: {
+						if (!selected) {
+							settingView.currentIndex = index;
+						} else {
+							settingInteraction(index);
+							settingSideInteraction(currentIndex, 1);
+						}
 					}
 				}
 			}
 		}
 
 		Keys.onPressed: {
+			// Do a normal setting interaction + interaction = to pressing right
 			if (api.keys.isAccept(event)) {
 				event.accepted = true;
 				settingInteraction(currentIndex);
+				settingSideInteraction(currentIndex, 1);
 			}
 
+			// Go to parent page or main menu if at root page
 			if (api.keys.isCancel(event)) {
 				event.accepted = true;
 				if (curPage === "/") {
@@ -300,8 +387,10 @@ FocusScope {
 
 		Keys.onUpPressed: {
 			if (currentIndex === 0) {
-				if (curPage === "/") {
+				if (curPage === "/" && settings["carousel_up_menu"]) {
 					screen = 0;
+				} else {
+					currentIndex = count - 1;
 				}
 			} else {
 				decrementCurrentIndex();
@@ -315,25 +404,65 @@ FocusScope {
 				incrementCurrentIndex();
 			}
 		}
+
+		Keys.onLeftPressed: {
+			settingSideInteraction(currentIndex, 0);
+		}
+
+		Keys.onRightPressed: {
+			settingSideInteraction(currentIndex, 1);
+		}
 	}
 
 
-
+	// Behavior upon interacting with a setting, either by clicking or pressing accept.
 	function settingInteraction(index) {
 		let metaSetting = settingModel.get(index);
 		switch (metaSetting.type) {
 			case "page":
 				goToChildPage(metaSetting.id);
 				break;
+			case "setting_bin":
+				settings[metaSetting.setting] = !settings[metaSetting.setting];
+				refreshSettings(metaSetting.setting);
+				break;
+			case "setting_range":
+				if (settings[metaSetting.setting] === metaSetting.maxVal) {
+					settings[metaSetting.setting] = metaSetting.minVal - metaSetting.step;
+				}
+				refreshSettings(metaSetting.setting);
+				break;
 		}
 	}
 
+	function settingSideInteraction(index, dir) {
+		let metaSetting = settingModel.get(index);
+		switch (metaSetting.type) {
+			case "setting_range":
+				if (dir == 1 && settings[metaSetting.setting] < metaSetting.maxVal) {
+					settings[metaSetting.setting] += metaSetting.step;
+				} else if (dir == 0 && settings[metaSetting.setting] > metaSetting.minVal) {
+					settings[metaSetting.setting] -= metaSetting.step;
+				}
+				settings[metaSetting.setting] = Math.round(settings[metaSetting.setting] * 1000) / 1000
+				refreshSettings(metaSetting.setting);
+				break;
+		}
+	}
+
+	// Go to the child page specified by the given ID.
+	/* IMPLEMENTATION NOTE:
+	 * When passed as a parameter to this function, the child page's .items field is treated
+	 * as a ListModel rather than a JavaScript Object. This is why the syntax below is used
+	 * for curPageContents rather than passing the .items field directly.
+	 */
 	function goToChildPage(childID) {
 		curPage += childID + "/";
-		curPageContents = curPageContents[getIndexOfChildPage(childID, curPageContents)].items;
+		curPageContents = curPageContents[getIndexOfChildPage(childID)].items;
 		refreshModel();
 	}
 
+	// Go to the parent page.
 	function goToParentPage() {
 		if (curPage !== "/") {
 			curPage = curPage.substring(0, curPage.lastIndexOf("/", curPage.length - 2) + 1);
@@ -341,14 +470,16 @@ FocusScope {
 
 			let directory = curPage.split("/");
 			for (let i = 1; i < directory.length - 1; i++) {
-				let idxOfChild = getIndexOfChildPage(directory[i], curPageContents);
+				let idxOfChild = getIndexOfChildPage(directory[i]);
 				curPageContents = curPageContents[idxOfChild].items;
 			}
 			refreshModel();
 		}
 	}
 
-	function getIndexOfChildPage(pageID, contents) {
+	// Get the index of the child page with ID pageID in the given page contents.
+	// The page contents is a list of setting items.
+	function getIndexOfChildPage(pageID, contents = curPageContents) {
 		for (let i = 0; i < contents.length; i++) {
 			if ("id" in contents[i] && contents[i].id === pageID) {
 				return i;
@@ -357,6 +488,8 @@ FocusScope {
 		return -1;
 	}
 
+	// Refreshes the setting model to the current page contents.
+	// Basically, converts curPageContents to a ListModel.
 	function refreshModel() {
 		settingModel.clear();
 		for (let i = 0; i < curPageContents.length; i++) {
@@ -364,5 +497,10 @@ FocusScope {
 				settingModel.append(curPageContents[i]);
 			}
 		}
+	}
+
+	function refreshSettings(settingThatChanged) {
+		settings = new Object(settings);
+		settingsRoot.settingChanged(settingThatChanged);
 	}
 }

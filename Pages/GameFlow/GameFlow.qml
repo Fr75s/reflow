@@ -154,8 +154,8 @@ FocusScope {
 
 
 
-	property real averageAspectRatio: getAverageAspectRatio(currentCollection);
-	property real gameWidth: sw * 0.225 * Math.pow(averageAspectRatio, 0.6);
+	property real averageAspectRatio: getAverageAspectRatio(currentCollection)
+	property real gameWidth: sw * 0.225 * settings["carousel_zoom"] * Math.pow(averageAspectRatio, 0.6)
 	property real gameSpacing: gameWidth * -0.2
 
 	// Number of games (excluding the middle one) that fill the left edge of the screen to the center
@@ -207,7 +207,10 @@ FocusScope {
 
 		Keys.onLeftPressed: { decrementCurrentIndex() }
 		Keys.onRightPressed: { incrementCurrentIndex() }
-		Keys.onUpPressed: { screen = 0 }
+		Keys.onUpPressed: {
+			if (settings["carousel_up_menu"])
+				screen = 0;
+		}
 
         Keys.onPressed: {
 			if (api.keys.isAccept(event)) {
@@ -324,13 +327,18 @@ FocusScope {
 
 	function update() {
 		averageAspectRatio = getAverageAspectRatio(currentCollection);
-		gameWidth = sw * 0.225 * Math.pow(averageAspectRatio, 0.6);
-		gameSpacing = gameWidth * -0.2
+		gameWidth = sw * 0.225 * settings["carousel_zoom"] * Math.pow(averageAspectRatio, 0.6);
+		gameSpacing = gameWidth * -0.2;
 		sideCount = Math.round((sw / 2) / (gameWidth + gameSpacing));
 		updateModel();
 		updateCurrentGame();
 	}
 
+	function settingChanged(setting) {
+		if (setting === "carousel_zoom") {
+			update();
+		}
+	}
 
 
 	Component.onCompleted: {

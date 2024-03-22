@@ -105,9 +105,10 @@ FocusScope {
 					}
 				}
 
-				visible: false
+				//visible: false
 			}
 
+			/*
 			DropShadow {
 				anchors.fill: pageSelectionRect
 				source: pageSelectionRect
@@ -117,6 +118,7 @@ FocusScope {
 				samples: 21
 				color: "#80000000"
 			}
+			*/
 
 			Keys.onPressed: {
 				if (api.keys.isAccept(event)) {
