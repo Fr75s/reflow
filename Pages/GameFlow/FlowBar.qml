@@ -6,7 +6,7 @@ Rectangle {
 
 	z: 15
 
-	color: colors["barBG"]
+	color: colors.bg1
 
 	width: parent.width
 	height: parent.height * 0.1
@@ -39,7 +39,7 @@ Rectangle {
 		width: parent.width
 		height: 1
 
-		color: "#607c7f8e"
+		color: ocolor(colors.outline, "60")
 	}
 
 	// Title and _ of _
@@ -53,7 +53,7 @@ Rectangle {
 		anchors.horizontalCenter: parent.horizontalCenter
 
 		text: gameflow.currentGame ? gameflow.currentGame.title : ""
-		color: colors["text"]
+		color: colors.text
 
 		elide: Text.ElideRight
 
@@ -76,7 +76,7 @@ Rectangle {
 		anchors.bottomMargin: parent.height * 0.025
 
 		text: gameflow.flowProgress[0] + " of " + gameflow.flowProgress[1]
-		color: colors["text"]
+		color: colors.text
 
 		horizontalAlignment: Text.AlignHCenter
 		verticalAlignment: Text.AlignVCenter

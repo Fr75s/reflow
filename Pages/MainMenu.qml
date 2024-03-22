@@ -12,7 +12,7 @@ FocusScope {
 		width: parent.width
 		height: parent.height * 0.3
 
-		source: "../assets/meta/logo.png"
+		source: settings["light"] ? "../assets/meta/logo_light.png" : "../assets/meta/logo.png"
 		fillMode: Image.PreserveAspectFit
 
 		anchors.top: parent.top

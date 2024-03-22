@@ -58,7 +58,8 @@ FocusScope {
                 text: "#16171A", // Used as the text color
                 subtext: "#31333A",
                 accent: "#74AAFF", // Used as the accent color (slider circles in settings)
-                barBG: "#000000", // Used as the bottom bar color
+                outline: "#000000",
+                darkSurface: "#7C7f8e",
                 bottomIcons: "#F2F6FF", // Used as the color of the bottom bar icons
             },
             "dark": {
@@ -70,7 +71,8 @@ FocusScope {
                 text: "#F2F6FF",
                 subtext: "#BDC0C7",
                 accent: "#74AAFF",
-                barBG: "#000000",
+                outline: "#7c7f8e",
+                darkSurface: "#000000",
                 bottomIcons: "#F2F6FF",
             }
         }

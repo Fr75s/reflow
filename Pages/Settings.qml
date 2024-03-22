@@ -140,9 +140,9 @@ FocusScope {
 
 		function formatCurPage() {
 			if (curPage === "/") {
-				return "Main Page";
+				return "Home";
 			} else {
-				let out = "";
+				let out = "Home » ";
 				let components = curPage.substring(1, curPage.length - 1).split("/");
 				for (let i = 0; i < components.length; i++) {
 					out += components[i].substring(0, 1).toUpperCase() + components[i].substring(1).toLowerCase();
@@ -440,13 +440,13 @@ FocusScope {
 				break;
 			case "setting_bin":
 				settings[metaSetting.setting] = !settings[metaSetting.setting];
-				refreshSettings(metaSetting.setting);
+				handleSettingChange(metaSetting.setting);
 				break;
 			case "setting_range":
 				if (settings[metaSetting.setting] === metaSetting.maxVal) {
 					settings[metaSetting.setting] = metaSetting.minVal - metaSetting.step;
 				}
-				refreshSettings(metaSetting.setting);
+				handleSettingChange(metaSetting.setting);
 				break;
 		}
 	}
@@ -461,7 +461,7 @@ FocusScope {
 					settings[metaSetting.setting] -= metaSetting.step;
 				}
 				settings[metaSetting.setting] = Math.round(settings[metaSetting.setting] * 1000) / 1000
-				refreshSettings(metaSetting.setting);
+				handleSettingChange(metaSetting.setting);
 				break;
 		}
 	}
@@ -515,8 +515,9 @@ FocusScope {
 		}
 	}
 
-	function refreshSettings(settingThatChanged) {
+	function handleSettingChange(settingThatChanged) {
 		settings = new Object(settings);
+		api.memory.set(settingThatChanged, settings[settingThatChanged]);
 		settingsRoot.settingChanged(settingThatChanged);
 	}
 }

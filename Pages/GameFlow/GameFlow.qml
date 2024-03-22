@@ -239,7 +239,7 @@ FocusScope {
 		width: parent.width
 		height: parent.height * 0.35
 
-		color: "black"
+		color: colors.darkSurface
 		opacity: 0.5
 	}
 
