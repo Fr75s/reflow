@@ -317,6 +317,7 @@ FocusScope {
 								}
 							}
 
+							color: colors.text
 							visible: (type === "setting_bin")
 						}
 
