@@ -80,7 +80,7 @@ Component {
 					anchors.fill: parent
 					z: parent.z + 1
 
-					color: "#80000000"
+					color: ocolor(colors.darkSurface, "80");
 				}
 			}
 		}
@@ -109,7 +109,6 @@ Component {
 
 				axis { x: 0; y: 1; z: 0 }
 				angle: leftRightCenter === 0 ? 0 : (leftRightCenter === 1 ? 30 : -30);
-
 				Behavior on angle {
 					NumberAnimation {
 						easing.type: Easing.OutQuad
@@ -119,7 +118,6 @@ Component {
 			}
 
 			scale: leftRightCenter === 0 ? 1 : (0.85)
-
 			Behavior on scale {
 				NumberAnimation {
 					easing.type: Easing.OutQuad
@@ -153,8 +151,8 @@ Component {
 					z: parent.z + 4
 
 					gradient: Gradient {
-						GradientStop { position: 0.0; color: "#60000000" }
-						GradientStop { position: 1.0; color: "#d0000000" }
+						GradientStop { position: 0.0; color: ocolor(colors.darkSurface, "60"); }
+						GradientStop { position: 1.0; color: ocolor(colors.darkSurface, "d0"); }
 					}
 				}
 
@@ -188,8 +186,35 @@ Component {
 
 					Rectangle {
 						anchors.fill: parent
-						color: "#80000000"
+						color: ocolor(colors.darkSurface, "80");
 						z: parent.z + 1
+					}
+				}
+			}
+
+			// Interactivity
+			Flickable {
+				anchors.fill: parent
+
+				enabled: gameflowView.focus
+				flickableDirection: Flickable.VerticalFlick
+				onFlickStarted: {
+					// Flick up to go to main menu
+					if (verticalVelocity < -800) {
+						screen = 0;
+					}
+				}
+
+				// Click to play or switch to clicked game
+				MouseArea {
+					anchors.fill: parent
+					enabled: gameflowView.focus
+					onClicked: {
+						if (gameflowView.realCurrentIndex === index) {
+							gameflowView.launchGameFromGameflow();
+						} else {
+							gameflowView.currentIndex = (index - (sideCount + 1)) % currentModel.count;
+						}
 					}
 				}
 			}

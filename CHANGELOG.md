@@ -1,7 +1,37 @@
-# 0.2.0 TODO
+# Longshot Ideas
 
-x: Add details screen for each game
-x: Modify top section
+{requires manipulation of files/reading precise image data}
+x: Preload blurhash calculations (maybe can be done remotely? but preferrably locally so as to not overload the blurhash website)
+x: Preload image scraping
+x: Full builtin scraper?
+
+{requires more advanced XMLHttpRequest knowledge, but DEFINITELY possible as it has been done before}
+x: RetroAchievements
+
+# 1.0.0 TODO
+
+x: More interface themes
+	x: Non-infinite gameflow
+x: Builtin Preload Scraper (using XMLHttpRequest? easy for missing descriptions and other text data but not images)
+x: Background preloading?
+
+# 0.3.0 TODO
+
+x: Add details screen
+x: Built-in update detector
+x: Search functionality (may be delayed to 1.0.0)
+x: Click/Touch based gameflow scrolling?
+
+# 0.2.0
+
+- Added Main Menu
+- Added Settings page
+	- Added Light Mode
+	- Added Zoom
+	- Added toggle for up button to lead to main menu
+	- Added "Redo Preload" action
+- Added Background details
+- Changed preloading to detect if any games were changed
 
 # 0.1.1
 

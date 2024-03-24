@@ -153,6 +153,7 @@ FocusScope {
         Settings {
             id: settingsPG
             focus: (screen == 1)
+            visible: (y !== sh)
             opacity: focus ? 1 : 0
             Behavior on opacity {
                 NumberAnimation {
@@ -163,12 +164,17 @@ FocusScope {
             onSettingChanged: {
                 gameflow.settingChanged(setting);
             }
+
+            onActionTaken: {
+                gameflow.actionTaken(action);
+            }
         }
 
         // GameFlow page
         GameFlow {
             id: gameflow
             focus: (screen == 2)
+            visible: (y !== sh)
             opacity: focus ? 1 : 0
             Behavior on opacity {
                 NumberAnimation {
@@ -180,6 +186,7 @@ FocusScope {
         // GameFlow flowbar (separate as shaders do not work properly when included)
         FlowBar {
             opacity: gameflow.focus ? 1 : 0
+            visible: (y !== sh)
             Behavior on opacity {
                 NumberAnimation {
                     duration: 400
@@ -214,8 +221,8 @@ FocusScope {
         }
         z: -14
 
-        source: "assets/art/blurs.png"
-        opacity: 0.65
+        source: "assets/art/blurs_light.png"
+        opacity: settings["light"] ? 1 : 0.5
         mipmap: true
     }
 
@@ -225,6 +232,13 @@ FocusScope {
 		z: -15
 		color: colors.bg1
 		anchors.fill: parent
+
+		Behavior on color {
+            ColorAnimation {
+                easing.type: Easing.OutCubic
+                duration: 200
+            }
+        }
 	}
 
 

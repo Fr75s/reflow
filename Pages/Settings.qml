@@ -34,6 +34,7 @@ FocusScope {
 	 * 		lower: The lower bound of the range
 	 * 		upper: The upper bound of the range
 	 * 		step: The step size (how much to decrease/increase per increment)
+	 * 	"setting_action": A setting which performs an action upon interaction. The action is specified by the setting field.
 	 *
 	 */
 	property var settingData: [
@@ -47,6 +48,12 @@ FocusScope {
 					type: "setting_bin",
 					name: loc.settings_appearance_lightmode,
 					setting: "light"
+				},
+				{
+					type: "setting_list",
+					name: loc.settings_appearance_theme,
+					setting: "theme",
+					list: themes
 				},
 				{
 					type: "setting_range",
@@ -72,15 +79,15 @@ FocusScope {
 			]
 		},
 		{
-			type: "setting_list",
-			name: loc.settings_theme,
+			type: "setting_action",
+			name: loc.settings_other_repreload,
 			header: loc.settings_other,
-			setting: "theme",
-			list: themes
+			setting: "act_repreload"
 		}
 	]
 
 	signal settingChanged(string setting);
+	signal actionTaken(string action);
 
 	property string curPage: "/"
 	property var curPageContents: settingData
@@ -116,6 +123,15 @@ FocusScope {
 			family: display.name
 			weight: Font.Medium
 			pixelSize: height
+		}
+
+		MouseArea {
+			anchors.fill: parent
+
+			enabled: settingsRoot.focus
+			onClicked: {
+				screen = 0;
+			}
 		}
 	}
 
@@ -357,12 +373,14 @@ FocusScope {
 				// Mouse Interactivity
 				MouseArea {
 					anchors.fill: parent
+					enabled: settingView.focus
+					propagateComposedEvents: true
 					onClicked: {
 						if (!selected) {
 							settingView.currentIndex = index;
 						} else {
 							settingInteraction(index);
-							settingSideInteraction(currentIndex, 1);
+							settingSideInteraction(index, 1);
 						}
 					}
 				}
@@ -449,6 +467,8 @@ FocusScope {
 				}
 				handleSettingChange(metaSetting.setting);
 				break;
+			case "setting_action":
+				settingsRoot.actionTaken(metaSetting.setting);
 		}
 	}
 

@@ -52,6 +52,7 @@ FocusScope {
 		cellHeight: parent.height * 0.1
 
 		anchors.top: logoImage.bottom
+		anchors.topMargin: parent.height * 0.05
 		anchors.horizontalCenter: parent.horizontalCenter
 
 		model: pageModel

@@ -172,9 +172,13 @@ FocusScope {
 	PathView {
 		id: gameflowView
 
+		width: parent.width
+		height: focus ? parent.height : 0
+
 		anchors.left: parent.left
 		anchors.right: parent.right
 
+		//y: (parent.height * -0.3)
 		anchors.bottom: parent.bottom
 		anchors.bottomMargin: parent.height * 0.3
 
@@ -186,10 +190,6 @@ FocusScope {
 		property int realCurrentIndex: (currentIndex + (sideCount + 1)) % currentModel.count
 		property int selectionIndex: (currentIndex + (sideCount + 1)) % currentCollection.games.count
 
-		snapMode: PathView.SnapOneItem
-		//preferredHighlightBegin: 0
-		//preferredHighlightEnd: 0.3
-		highlightRangeMode: PathView.StrictlyEnforceRange
 		highlightMoveDuration: 300
 
 		pathItemCount: 3 + sideCount * 2
@@ -215,7 +215,11 @@ FocusScope {
         Keys.onPressed: {
 			if (api.keys.isAccept(event)) {
 				event.accepted = true;
-				launchGame(currentCollection.games.get(selectionIndex));
+				launchGameFromGameflow();
+			}
+
+			if (api.keys.isDetails(event)) {
+				event.accepted = true;
 			}
 
 			if (api.keys.isNextPage(event)) {
@@ -227,7 +231,38 @@ FocusScope {
 				changeCollection(true);
 			}
 		}
+
+		function launchGameFromGameflow() {
+			launchGame(currentCollection.games.get(selectionIndex));
+		}
 	}
+
+	// Mouse interactivity
+	MouseArea {
+		width: parent.width * 0.5
+		height: parent.height * 0.3
+
+		anchors.left: parent.left
+		anchors.bottom: parent.bottom
+
+		onClicked: {
+			changeCollection(true);
+		}
+	}
+
+	MouseArea {
+		width: parent.width * 0.5
+		height: parent.height * 0.3
+
+		anchors.right: parent.right
+		anchors.bottom: parent.bottom
+
+		onClicked: {
+			changeCollection(false);
+		}
+	}
+
+
 
 	Rectangle {
 		id: pathViewReflMaterial
@@ -340,6 +375,13 @@ FocusScope {
 		}
 	}
 
+	function actionTaken(action) {
+		if (action === "act_repreload") {
+			preloadData = {};
+			preload();
+		}
+	}
+
 
 	Component.onCompleted: {
 		// Check for any needed preloads
@@ -360,6 +402,10 @@ FocusScope {
 					doPreload = true;
 					break;
 				}
+				if (!("averageAspectRatio" in preloadedCollection) && !(preloadKeys[i] in defaultAspectRatios)) {
+					doPreload = true;
+					break;
+				}
 				i++;
 			}
 			if (doPreload) {
@@ -369,6 +415,7 @@ FocusScope {
 	}
 
 	function preload() {
+		console.log("Preloading...");
 		status.showStatus("Preloading Collections...");
 		// Init with preexisting data
 		let newPreloadData = preloadData;
