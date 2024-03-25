@@ -215,7 +215,9 @@ FocusScope {
         Keys.onPressed: {
 			if (api.keys.isAccept(event)) {
 				event.accepted = true;
-				launchGameFromGameflow();
+				if (!event.isAutoRepeat) {
+					launchGameFromGameflow();
+				}
 			}
 
 			if (api.keys.isDetails(event)) {
