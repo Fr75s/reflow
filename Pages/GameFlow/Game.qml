@@ -200,7 +200,7 @@ Component {
 				flickableDirection: Flickable.VerticalFlick
 				onFlickStarted: {
 					// Flick up to go to main menu
-					if (verticalVelocity < -800) {
+					if (verticalVelocity < -1000) {
 						screen = 0;
 					}
 				}
@@ -208,7 +208,7 @@ Component {
 				// Click to play or switch to clicked game
 				MouseArea {
 					anchors.fill: parent
-					enabled: gameflowView.focus
+					enabled: parent.enabled
 					onClicked: {
 						if (gameflowView.realCurrentIndex === index) {
 							gameflowView.launchGameFromGameflow();

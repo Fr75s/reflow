@@ -154,7 +154,7 @@ FocusScope {
 
 
 
-	property real averageAspectRatio: getAverageAspectRatio(currentCollection)
+	property real averageAspectRatio: 1;
 	property real gameWidth: sw * 0.225 * settings["carousel_zoom"] * Math.pow(averageAspectRatio, 0.6)
 	property real gameSpacing: gameWidth * -0.2
 
@@ -313,8 +313,10 @@ FocusScope {
 		} else if (preloadData && collection.shortName in preloadData && "averageAspectRatio" in preloadData[collection.shortName]) {
 			return preloadData[collection.shortName]["averageAspectRatio"];
 		} else {
+			console.log("Calculating average aspect for " + collection.name);
 			let aspectRatios = [];
 			let aspectTests = collection.games.count;
+			console.log("This collection has " + collection.games.count + " games");
 			for (var i = 0; i < aspectTests; i++) {
 				testAspectRatio.source = collection.games.get(i).assets.boxFront;
 				if (testAspectRatio.sourceSize.width > 0 && testAspectRatio.sourceSize.height > 0) {
@@ -412,6 +414,9 @@ FocusScope {
 				preload();
 			}
 		}
+
+		// Set this collection's AAR
+		averageAspectRatio = getAverageAspectRatio(currentCollection);
 	}
 
 	function preload() {
@@ -425,6 +430,7 @@ FocusScope {
 		// Get preloaded data
 		for (let i = 0; i < api.collections.count; i++) {
 			const currentPCollection = api.collections.get(i);
+			console.log("Preloading " + currentPCollection.name);
 			// Preload Collections
 			if (!(currentPCollection.shortName in newPreloadData)) {
 				newPreloadData[currentPCollection.shortName] = {};
@@ -450,6 +456,7 @@ FocusScope {
 					// No valid x-aar, calculate manually
 					status.toggleMinorProgress();
 					newPreloadData[currentPCollection.shortName]["averageAspectRatio"] = getAverageAspectRatio(currentPCollection, 1);
+					console.log("Average aspect acquired!");
 					status.toggleMinorProgress();
 				}
 			}
