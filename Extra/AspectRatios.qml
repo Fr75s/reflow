@@ -66,7 +66,9 @@ QtObject {
 		"neogeocd": 1, // very consistent
 		"ngp": 0.85,
 		"ngpc": 1, // Most boxes are actually 0.993
+		"ps": 1, // ps, psx, ps1 all aliases for Sony Playstation 1
 		"psx": 1,
+		"ps1": 1,
 		"ps2": 0.71,
 		"ps3": 0.86,
 		"ps4": 0.8,

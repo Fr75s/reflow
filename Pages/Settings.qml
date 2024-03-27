@@ -60,7 +60,7 @@ FocusScope {
 					name: loc.settings_appearance_zoom,
 					setting: "carousel_zoom",
 					minVal: 0.5,
-					maxVal: 1.2,
+					maxVal: 1.5,
 					step: 0.1
 				}
 			]
@@ -173,7 +173,7 @@ FocusScope {
 
 	ListView {
 		id: settingView
-		width: parent.width * 0.9 > 1000 ? 1000 : parent.width * 0.9
+		width: parent.height
 		height: parent.height * 0.8
 
 		focus: parent.focus

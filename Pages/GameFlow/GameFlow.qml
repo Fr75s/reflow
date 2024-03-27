@@ -310,9 +310,14 @@ FocusScope {
 	 * If in neither, manually calculates it.
 	 */
 	function getAverageAspectRatio(collection, broadcastProgress = 0) {
-		if (collection.shortName in defaultAspectRatios.data) {
-			return defaultAspectRatios.data[currentCollection.shortName];
+		console.log("Getting average aspect ratio for " + collection.name);
+		if (defaultAspectRatios && collection.shortName in defaultAspectRatios.data) {
+			console.log("Getting from default aspect ratios");
+			console.log("Value: " + defaultAspectRatios.data[collection.shortName]);
+			return defaultAspectRatios.data[collection.shortName];
 		} else if (preloadData && collection.shortName in preloadData && "averageAspectRatio" in preloadData[collection.shortName]) {
+			console.log("Getting from preload data");
+			console.log("Value: " + preloadData[collection.shortName]["averageAspectRatio"]);
 			return preloadData[collection.shortName]["averageAspectRatio"];
 		} else {
 			console.log("Calculating average aspect for " + collection.name);
@@ -337,6 +342,7 @@ FocusScope {
 				}
 			}
 
+			console.log("Calculation finished");
 			return aspectRatios.length > 0 ? aspectRatios[Math.floor((aspectRatios.length - 1) / 2)] : (8 / 7);
 		}
 	}
@@ -418,6 +424,7 @@ FocusScope {
 		}
 
 		// Set this collection's AAR
+		console.log("Setting the first Average Aspect Ratio...");
 		averageAspectRatio = getAverageAspectRatio(currentCollection);
 	}
 
