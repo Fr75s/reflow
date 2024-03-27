@@ -1,26 +1,21 @@
-# Longshot Ideas
-
-{requires manipulation of files/reading precise image data}
-x: Preload blurhash calculations (maybe can be done remotely? but preferrably locally so as to not overload the blurhash website)
-x: Preload image scraping
-x: Full builtin scraper?
-
-{requires more advanced XMLHttpRequest knowledge, but DEFINITELY possible as it has been done before}
-x: RetroAchievements
-
 # 1.0.0 TODO
 
-x: More interface themes
-	x: Non-infinite gameflow
-x: Builtin Preload Scraper (using XMLHttpRequest? easy for missing descriptions and other text data but not images)
-x: Background preloading?
+x: Even More interface layouts
+x: Uniflow compatibility
+x: Other coverflow app theme compatibility (?)
+x: 3D boxes
+
+# 0.4.0 TODO
+
+x: Built-in update detector
+- Search functionality
+- Non-infinite gameflow
 
 # 0.3.0 TODO
 
 x: Add details screen
-x: Built-in update detector
-x: Search functionality (may be delayed to 1.0.0)
-x: Click/Touch based gameflow scrolling?
+x: Box Art / Marquee switch
+- Click/Touch based gameflow scrolling?
 
 # 0.2.0
 
@@ -47,3 +42,14 @@ x: Click/Touch based gameflow scrolling?
 - Changed Fonts
 - Changed to one lower bar with a blur effect
 - Enhanced shadow effect
+
+# Longshot Ideas
+
+{requires more advanced XMLHttpRequest knowledge, but DEFINITELY possible as it has been done before}
+x: Builtin Preload Scraper (using XMLHttpRequest? easy for missing descriptions and other text data but not images)
+x: RetroAchievements
+
+{requires manipulation of files/reading precise image data}
+x: Preload blurhash calculations (maybe can be done remotely? but preferrably locally so as to not overload the blurhash website)
+x: Preload image scraping
+x: Full builtin scraper?
