@@ -23,6 +23,7 @@ FocusScope {
 		id: currentModel
 
 		Component.onCompleted: {
+			console.log("Initializing Model");
 			update();
 
 			while (gameflowView.selectionIndex > 0) {
@@ -422,10 +423,6 @@ FocusScope {
 				preload();
 			}
 		}
-
-		// Set this collection's AAR
-		console.log("Setting the first Average Aspect Ratio...");
-		averageAspectRatio = getAverageAspectRatio(currentCollection);
 	}
 
 	function preload() {
