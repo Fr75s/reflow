@@ -152,7 +152,7 @@ FocusScope {
         // Settings page
         Settings {
             id: settingsPG
-            focus: (screen == 1)
+            focus: (screen === 1)
             visible: (y !== sh)
             opacity: focus ? 1 : 0
             Behavior on opacity {
@@ -173,24 +173,34 @@ FocusScope {
         // GameFlow page
         GameFlow {
             id: gameflow
-            focus: (screen == 2)
+            focus: (screen === 2)
             visible: (y !== sh)
-            opacity: focus ? 1 : 0
+            opacity: (focus || gameflowLSM.active) ? 1 : 0
             Behavior on opacity {
                 NumberAnimation {
                     duration: 400
                 }
             }
+            onActivateFlowLSM: {
+                gameflowLSM.startIndex = startIndex;
+                gameflowLSM.active = true;
+            }
         }
-
         // GameFlow flowbar (separate as shaders do not work properly when included)
         FlowBar {
-            opacity: gameflow.focus ? 1 : 0
+            opacity: gameflow.opacity
             visible: (y !== sh)
-            Behavior on opacity {
-                NumberAnimation {
-                    duration: 400
-                }
+        }
+        // Gameflow Collections Selector
+        LeftSelectorMenu {
+            id: gameflowLSM
+            focus: active && (screen === 2)
+            function updateCurrentCollection(collectionIndex) {
+                gameflow.changeCollection(collectionIndex);
+            }
+            onDeactivate: {
+                active = false;
+                gameflow.forceActiveFocus();
             }
         }
 

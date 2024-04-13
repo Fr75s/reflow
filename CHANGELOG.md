@@ -8,14 +8,15 @@ x: 3D boxes
 # 0.4.0 TODO
 
 x: Built-in update detector
-- Search functionality
-- Non-infinite gameflow
+x: Search functionality
+x: Non-infinite gameflow
 
 # 0.3.0 TODO
 
 x: Add details screen
 x: Box Art / Marquee switch
-- Click/Touch based gameflow scrolling?
+- Collection selector menu
+- Click/Touch based gameflow scrolling
 
 # 0.2.0
 

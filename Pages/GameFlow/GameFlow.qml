@@ -6,18 +6,29 @@ import QtQuick.Window 2.15
 
 import SortFilterProxyModel 0.2
 
-FocusScope {
+import "../Common"
 
+FocusScope {
+	id: gameflowRoot
 	anchors.fill: parent
 
+	signal activateFlowLSM(int startIndex)
+
+	// Current collection
 	property int currentCollectionIndex: 0
 	property var currentCollection: api.collections.get(currentCollectionIndex)
 
+	// Preloaded data (if it exists)
 	property var preloadData: api.memory.get("preload");
 
-	//property var currentModel: currentCollection.games
-
+	// Current index of the gameflow (0: current index, 1: total amount)
 	property var flowProgress: [(gameflowView.selectionIndex) + 1, currentCollection.games.count]
+
+	// Mode
+		// 0: Flow
+		// 1: Details
+		// 2: Collections
+	property int menuMode: 0
 
 	ListModel {
 		id: currentModel
@@ -40,134 +51,41 @@ FocusScope {
 	}
 
 
-	Text {
-		id: titleText
-		width: parent.width * .9
-
-		text: currentCollection.name
-		color: colors.text
-
-		font {
-			family: display.name
-			weight: Font.Medium
-			pixelSize: parent.height * .04
-		}
-
-		anchors.left: parent.left
-		anchors.leftMargin: parent.width * .05
-		anchors.top: parent.top
-		anchors.topMargin: parent.height * .05
+	GameFlowHeader {
+		titleLabel: currentCollection.name
+		visible: menuMode === 0
 	}
 
-	Row {
-		spacing: 20
+	/*
+	LeftSelectorMenu {
+		id: lsm
+		active: menuMode === 2;
+		focus: parent.focus && menuMode === 2
+		startIndex: currentCollectionIndex
 
-		layoutDirection: Qt.RightToLeft
-
-		anchors.top: parent.top
-		anchors.topMargin: parent.height * .05
-		anchors.right: parent.right
-		anchors.rightMargin: parent.width * .05
-
-		height: titleText.font.pixelSize
-
-		Text {
-			text: getBatteryIcon(api.device.batteryPercent)
-			visible: !isNaN(api.device.batteryPercent)
-
-			height: parent.height
-
-			verticalAlignment: Text.AlignVCenter
-			font {
-				family: icons.name
-				pixelSize: parent.height
-			}
-
-			color: colors.text
-
-			function getBatteryIcon() {
-				if (!isNaN(api.device.batteryPercent)) {
-					if (api.device.batteryCharging) {
-						return icons.battery_charging;
-					} else {
-						var truncPercent = Math.round(api.device.batteryPercent * 10) * 10;
-						return icons.battery[truncPercent];
-					}
-				} else {
-					return "";
-				}
-			}
+		function updateCurrentCollection(collectionIndex) {
+			changeCollection(collectionIndex);
 		}
 
-		Text {
-			text: getBatteryPercent(api.device.batteryPercent)
-			visible: !isNaN(api.device.batteryPercent)
-
-			height: parent.height
-
-			verticalAlignment: Text.AlignVCenter
-			font {
-				family: display.name
-				weight: Font.Light
-				pixelSize: parent.height * 0.8
-			}
-
-			color: colors.text
-
-			function getBatteryPercent() {
-				if (!isNaN(api.device.batteryPercent)) {
-					return Math.round(api.device.batteryPercent * 100);
-				} else {
-					return "";
-				}
-			}
-		}
-
-		Text {
-			id: currentTime
-
-			height: parent.height
-
-			verticalAlignment: Text.AlignVCenter
-			font {
-				family: display.name
-				weight: Font.Light
-				pixelSize: parent.height * 0.8
-			}
-
-			color: colors.text
-
-			function set() {
-				currentTime.text = settings["24hClock"] ? Qt.formatTime(new Date(), "hh:mm") : Qt.formatTime(new Date(), "hh:mm AP");
-			}
-
-			// Runs the timer to update the time every second
-			Timer {
-				id: currentTimeTextTimer
-				interval: 1000 // Run the timer every second
-				repeat: true
-				running: true
-				triggeredOnStart: true // Start immediately
-				onTriggered: currentTime.set()
-			}
+		onDeactivate: {
+			menuMode = 0;
 		}
 	}
+	*/
 
-
-
+	// Median aspect ratio of games in collection
 	property real averageAspectRatio: 1;
-	property real gameWidth: sw * 0.225 * settings["carousel_zoom"] * Math.pow(averageAspectRatio, 0.6)
+	// Fixed width of each game
+	property real gameWidth: theme.width * 0.225 * settings["carousel_zoom"] * Math.pow(averageAspectRatio, 0.6)
+	// Space between games
 	property real gameSpacing: gameWidth * -0.2
 
 	// Number of games (excluding the middle one) that fill the left edge of the screen to the center
-	property int sideCount: Math.ceil((sw / 2) / (gameWidth + gameSpacing))
+	property int sideCount: Math.ceil((theme.width / 2) / (gameWidth + gameSpacing))
 
 	/* Left Edge:
-
 	sw / 2 - {num widths. + spaces to left edge} * gw
 				> ceil((sw / 2) / (gw + sp))
-
-
 	*/
 
 	PathView {
@@ -183,7 +101,8 @@ FocusScope {
 		anchors.bottom: parent.bottom
 		anchors.bottomMargin: parent.height * 0.3
 
-		focus: parent.focus
+		visible: menuMode === 0
+		focus: parent.focus && menuMode === 0
 
 		model: currentModel
 		delegate: Game { }
@@ -214,6 +133,7 @@ FocusScope {
 		}
 
         Keys.onPressed: {
+			// Launch game
 			if (api.keys.isAccept(event)) {
 				event.accepted = true;
 				if (!event.isAutoRepeat) {
@@ -221,17 +141,21 @@ FocusScope {
 				}
 			}
 
-			if (api.keys.isDetails(event)) {
-				event.accepted = true;
-			}
-
+			// Change collection
 			if (api.keys.isNextPage(event)) {
 				event.accepted = true;
-				changeCollection(false);
+				changeCollection(currentCollectionIndex + 1);
 			}
 			if (api.keys.isPrevPage(event)) {
 				event.accepted = true;
-				changeCollection(true);
+				changeCollection(currentCollectionIndex - 1);
+			}
+
+			// Activate Collection Selection menu
+			if (api.keys.isPageUp(event)) {
+				event.accepted = true;
+				gameflowRoot.activateFlowLSM(currentCollectionIndex);
+				//console.log(lsm.active);
 			}
 		}
 
@@ -241,17 +165,31 @@ FocusScope {
 	}
 
 	// Mouse interactivity
-	MouseArea {
+	Flickable {
 		width: parent.width * 0.5
 		height: parent.height * 0.3
 
 		anchors.left: parent.left
 		anchors.bottom: parent.bottom
 
-		onClicked: {
-			changeCollection(true);
+		flickableDirection: Flickable.HorizontalFlick
+		onFlickStarted: {
+			// Flick right to open collection menu
+			if (horizontalVelocity < -800) {
+				console.log("Opening Collections Menu");
+				gameflowRoot.activateFlowLSM(currentCollectionIndex);
+			}
+		}
+
+		// Click to decrement collection
+		MouseArea {
+			anchors.fill: parent
+			onClicked: {
+				changeCollection(currentCollectionIndex - 1);
+			}
 		}
 	}
+
 
 	MouseArea {
 		width: parent.width * 0.5
@@ -261,8 +199,18 @@ FocusScope {
 		anchors.bottom: parent.bottom
 
 		onClicked: {
-			changeCollection(false);
+			changeCollection(currentCollectionIndex + 1);
 		}
+	}
+
+	GameDetails {
+		id: gameDetailsPage
+
+		anchors.fill: parent
+		visible: menuMode === 1
+		focus: parent.focus && visible
+
+		currentGame: currentCollection.games.get(gameflowView.selectionIndex)
 	}
 
 
@@ -270,6 +218,7 @@ FocusScope {
 	Rectangle {
 		id: pathViewReflMaterial
 
+		visible: menuMode === 0
 		anchors.bottom: parent.bottom
 
 		z: -12
@@ -283,6 +232,9 @@ FocusScope {
 
 
 
+	// Functionality
+
+	// Update current model
 	function updateModel() {
 		// Reset Model
 		currentModel.clear();
@@ -348,18 +300,14 @@ FocusScope {
 		}
 	}
 
-	function changeCollection(decrement) {
+	function changeCollection(newIndex) {
 		// Change the collection
-		if (decrement) {
-			currentCollectionIndex -= 1;
-			if (currentCollectionIndex < 0) {
-				currentCollectionIndex = api.collections.count - 1;
-			}
-		} else {
-			currentCollectionIndex += 1;
-			if (currentCollectionIndex >= api.collections.count) {
-				currentCollectionIndex = 0;
-			}
+		currentCollectionIndex = newIndex;
+
+		if (currentCollectionIndex < 0) {
+			currentCollectionIndex = api.collections.count - 1;
+		} else if (currentCollectionIndex >= api.collections.count) {
+			currentCollectionIndex = 0;
 		}
 
 		// Update the model and currently selected game
@@ -474,5 +422,21 @@ FocusScope {
 		preloadData = newPreloadData;
 		// Hide status screen
 		status.hideStatus();
+	}
+
+	Keys.onPressed: {
+		// Toggle details
+		/*
+		if (api.keys.isDetails(event)) {
+			event.accepted = true;
+			console.log("Toggling details...");
+			if (menuMode === 0) {
+				menuMode = 1;
+			} else {
+				menuMode = 0;
+			}
+			console.log(`New mode: ${menuMode}`);
+		}
+		*/
 	}
 }
