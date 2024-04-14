@@ -15,7 +15,7 @@ x: Non-infinite gameflow
 
 x: Add details screen
 x: Box Art / Marquee switch
-- Collection selector menu
+- Collection selector menu (Accessible by pressing Page Up (L2) or swiping right from bottom left)
 - Click/Touch based gameflow scrolling
 
 # 0.2.0

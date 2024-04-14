@@ -19,7 +19,6 @@ FocusScope {
 		anchors.horizontalCenter: parent.horizontalCenter
 	}
 
-
 	ListModel {
 		id: pageModel
 
@@ -48,7 +47,7 @@ FocusScope {
 		height: parent.height * 0.55
 		keyNavigationWraps: true
 
-		focus: true
+		//focus: parent.focus
 
 		cellWidth: width
 		cellHeight: parent.height * 0.1
@@ -124,13 +123,28 @@ FocusScope {
 				screen = screenIndex;
 			}
 		}
-
-		Keys.onPressed: {
-			if (api.keys.isAccept(event)) {
-				event.accepted = true;
-				screen = pageModel.get(currentIndex).screenIndex;
-			}
-		}
 	}
 
+	/* PageView Actions
+	 *
+	 * For some reason when pageView is focused Pegasus's menu doesn't open at all,
+	 * so these actions need to be outside. I honestly don't know why because there
+	 * was never an api.keys.isCancel action, yet cancel actions didn't propagate.
+	 * This is a mystery I'll probably never know the true solution to...
+	 */
+
+	Keys.onUpPressed: {
+		pageView.moveCurrentIndexUp();
+	}
+
+	Keys.onDownPressed: {
+		pageView.moveCurrentIndexDown();
+	}
+
+	Keys.onPressed: {
+		if (api.keys.isAccept(event)) {
+			event.accepted = true;
+			screen = pageModel.get(pageView.currentIndex).screenIndex;
+		}
+	}
 }

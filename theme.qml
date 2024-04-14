@@ -19,6 +19,8 @@ FocusScope {
 
     id: theme
 
+    focus: true
+
     // Just a shorthand for the screen width and height
     property int sw: theme.width
     property int sh: theme.height
@@ -114,14 +116,6 @@ FocusScope {
     // Status Screen
     StatusScreen {
         id: status
-    }
-
-    Text {
-        anchors.top: parent.top
-        anchors.right: parent.right
-
-        color: colors.text
-        text: mainmenu.focus + ";" + gameflow.focus
     }
 
     // Main Menu

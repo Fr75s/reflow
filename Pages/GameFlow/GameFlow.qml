@@ -226,7 +226,7 @@ FocusScope {
 
 		active: menuMode === 1
 		visible: !gameflowView.middleVisible
-		focus: parent.focus && visible
+		focus: active
 
 		currentGame: currentCollection.games.get(gameflowView.selectionIndex)
 		currentGameWidth: gameWidth
