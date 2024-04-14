@@ -19,8 +19,6 @@ FocusScope {
 
     id: theme
 
-    focus: true
-
     // Just a shorthand for the screen width and height
     property int sw: theme.width
     property int sh: theme.height
@@ -118,16 +116,30 @@ FocusScope {
         id: status
     }
 
+    Text {
+        anchors.top: parent.top
+        anchors.right: parent.right
+
+        color: colors.text
+        text: mainmenu.focus + ";" + gameflow.focus
+    }
+
     // Main Menu
     MainMenu {
         id: mainmenu
 
-        y: (screen == 0) ? 0 : -sh
-        focus: y == 0
+        y: (screen === 0) ? 0 : -sh
+        focus: y === 0
         Behavior on y {
             NumberAnimation {
                 easing.type: Easing.InOutCubic
                 duration: 400
+            }
+        }
+
+        onYChanged: {
+            if (y === 0) {
+                console.log("Main Menu Focused");
             }
         }
 
@@ -173,7 +185,7 @@ FocusScope {
         // GameFlow page
         GameFlow {
             id: gameflow
-            focus: (screen === 2)
+            focus: (screen === 2 && !gameflowLSM.active)
             visible: (y !== sh)
             opacity: (focus || gameflowLSM.active) ? 1 : 0
             Behavior on opacity {
@@ -184,6 +196,7 @@ FocusScope {
             onActivateFlowLSM: {
                 gameflowLSM.startIndex = startIndex;
                 gameflowLSM.active = true;
+                enableMouse = false;
             }
         }
         // GameFlow flowbar (separate as shaders do not work properly when included)
@@ -200,7 +213,7 @@ FocusScope {
             }
             onDeactivate: {
                 active = false;
-                gameflow.forceActiveFocus();
+                gameflow.enableMouse = true;
             }
         }
 

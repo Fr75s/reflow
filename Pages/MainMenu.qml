@@ -6,7 +6,6 @@ FocusScope {
 	width: parent.width
 	height: parent.height
 
-
 	Image {
 		id: logoImage
 		width: parent.width
@@ -29,10 +28,12 @@ FocusScope {
 			screenIndex: 2
 		}
 
+		/*
 		ListElement {
 			page: "Search"
 			screenIndex: 3
 		}
+		*/
 
 		ListElement {
 			page: "Settings"
@@ -45,8 +46,9 @@ FocusScope {
 
 		width: parent.width * 0.4
 		height: parent.height * 0.55
+		keyNavigationWraps: true
 
-		focus: parent.focus
+		focus: true
 
 		cellWidth: width
 		cellHeight: parent.height * 0.1
@@ -105,27 +107,6 @@ FocusScope {
 						pixelSize: height
 					}
 				}
-
-				//visible: false
-			}
-
-			/*
-			DropShadow {
-				anchors.fill: pageSelectionRect
-				source: pageSelectionRect
-				verticalOffset: height * 0.065
-
-				radius: 10
-				samples: 21
-				color: "#80000000"
-			}
-			*/
-
-			Keys.onPressed: {
-				if (api.keys.isAccept(event)) {
-					event.accepted = true;
-					interact();
-				}
 			}
 
 			MouseArea {
@@ -141,6 +122,13 @@ FocusScope {
 
 			function interact() {
 				screen = screenIndex;
+			}
+		}
+
+		Keys.onPressed: {
+			if (api.keys.isAccept(event)) {
+				event.accepted = true;
+				screen = pageModel.get(currentIndex).screenIndex;
 			}
 		}
 	}

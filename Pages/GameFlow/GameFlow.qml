@@ -50,28 +50,9 @@ FocusScope {
 		tempUselessValueForForceUpdates = !tempUselessValueForForceUpdates
 	}
 
-
 	GameFlowHeader {
 		titleLabel: currentCollection.name
-		visible: menuMode === 0
 	}
-
-	/*
-	LeftSelectorMenu {
-		id: lsm
-		active: menuMode === 2;
-		focus: parent.focus && menuMode === 2
-		startIndex: currentCollectionIndex
-
-		function updateCurrentCollection(collectionIndex) {
-			changeCollection(collectionIndex);
-		}
-
-		onDeactivate: {
-			menuMode = 0;
-		}
-	}
-	*/
 
 	// Median aspect ratio of games in collection
 	property real averageAspectRatio: 1;
@@ -83,29 +64,53 @@ FocusScope {
 	// Number of games (excluding the middle one) that fill the left edge of the screen to the center
 	property int sideCount: Math.ceil((theme.width / 2) / (gameWidth + gameSpacing))
 
+	property bool enableMouse: true
+
 	/* Left Edge:
 	sw / 2 - {num widths. + spaces to left edge} * gw
 				> ceil((sw / 2) / (gw + sp))
 	*/
 
+	property int detailsAnimationDuration: 400
+
 	PathView {
 		id: gameflowView
 
 		width: parent.width
-		height: focus ? parent.height : 0
+		height: parent.height
+
+		property bool middleVisible: true
 
 		anchors.left: parent.left
 		anchors.right: parent.right
 
-		//y: (parent.height * -0.3)
-		anchors.bottom: parent.bottom
-		anchors.bottomMargin: parent.height * 0.3
+		y: (menuMode === 0 ? parent.height * -0.3 : (gameWidth / averageAspectRatio))
+		Behavior on y {
+			NumberAnimation {
+				duration: detailsAnimationDuration
+				easing.type: Easing.InOutCubic
+			}
+		}
 
-		visible: menuMode === 0
 		focus: parent.focus && menuMode === 0
+		interactive: enableMouse
 
 		model: currentModel
-		delegate: Game { }
+		delegate: FloatingGame {
+			game: currentModel.get(index);
+
+			aar: averageAspectRatio
+			leftRightCenter: gameflowView.realCurrentIndex === index ? 0 : (x + width / 2 > sw / 2 ? 2 : 1)
+
+			visible: (index !== gameflowView.realCurrentIndex) || gameflowView.middleVisible
+			reflSpacing: 4
+			reflAnimDuration: menuMode === 0 ? 0 : detailsAnimationDuration
+
+			width: gameWidth
+			z: (sideCount + 2) - Math.abs(gameflowView.realCurrentIndex - index) + gameflowView.count;
+
+			anchors.bottom: parent.bottom
+		}
 
 		property int realCurrentIndex: (currentIndex + (sideCount + 1)) % currentModel.count
 		property int selectionIndex: (currentIndex + (sideCount + 1)) % currentCollection.games.count
@@ -125,8 +130,14 @@ FocusScope {
 			}
 		}
 
-		Keys.onLeftPressed: { decrementCurrentIndex() }
-		Keys.onRightPressed: { incrementCurrentIndex() }
+		Keys.onLeftPressed: {
+			if (middleVisible)
+				decrementCurrentIndex();
+		}
+		Keys.onRightPressed: {
+			if (middleVisible)
+				incrementCurrentIndex();
+		}
 		Keys.onUpPressed: {
 			if (settings["carousel_up_menu"])
 				screen = 0;
@@ -144,18 +155,19 @@ FocusScope {
 			// Change collection
 			if (api.keys.isNextPage(event)) {
 				event.accepted = true;
-				changeCollection(currentCollectionIndex + 1);
+				if (middleVisible)
+					changeCollection(currentCollectionIndex + 1);
 			}
 			if (api.keys.isPrevPage(event)) {
 				event.accepted = true;
-				changeCollection(currentCollectionIndex - 1);
+				if (middleVisible)
+					changeCollection(currentCollectionIndex - 1);
 			}
 
 			// Activate Collection Selection menu
 			if (api.keys.isPageUp(event)) {
 				event.accepted = true;
 				gameflowRoot.activateFlowLSM(currentCollectionIndex);
-				//console.log(lsm.active);
 			}
 		}
 
@@ -172,6 +184,8 @@ FocusScope {
 		anchors.left: parent.left
 		anchors.bottom: parent.bottom
 
+		enabled: menuMode === 0 && enableMouse
+
 		flickableDirection: Flickable.HorizontalFlick
 		onFlickStarted: {
 			// Flick right to open collection menu
@@ -184,6 +198,7 @@ FocusScope {
 		// Click to decrement collection
 		MouseArea {
 			anchors.fill: parent
+			enabled: menuMode === 0 && enableMouse
 			onClicked: {
 				changeCollection(currentCollectionIndex - 1);
 			}
@@ -198,6 +213,7 @@ FocusScope {
 		anchors.right: parent.right
 		anchors.bottom: parent.bottom
 
+		enabled: menuMode === 0 && enableMouse
 		onClicked: {
 			changeCollection(currentCollectionIndex + 1);
 		}
@@ -207,19 +223,27 @@ FocusScope {
 		id: gameDetailsPage
 
 		anchors.fill: parent
-		visible: menuMode === 1
+
+		active: menuMode === 1
+		visible: !gameflowView.middleVisible
 		focus: parent.focus && visible
 
 		currentGame: currentCollection.games.get(gameflowView.selectionIndex)
+		currentGameWidth: gameWidth
+		currentAAR: averageAspectRatio
 	}
 
 
 
 	Rectangle {
 		id: pathViewReflMaterial
-
-		visible: menuMode === 0
-		anchors.bottom: parent.bottom
+		y: menuMode === 0 ? parent.height - height : parent.height
+		Behavior on y {
+			NumberAnimation {
+				duration: detailsAnimationDuration
+				easing.type: Easing.InOutCubic
+			}
+		}
 
 		z: -12
 
@@ -426,17 +450,26 @@ FocusScope {
 
 	Keys.onPressed: {
 		// Toggle details
-		/*
 		if (api.keys.isDetails(event)) {
 			event.accepted = true;
 			console.log("Toggling details...");
 			if (menuMode === 0) {
 				menuMode = 1;
+				gameflowView.middleVisible = false;
+				middleVisibleTrueAfterAnimTimer.stop();
 			} else {
 				menuMode = 0;
+				middleVisibleTrueAfterAnimTimer.start();
 			}
 			console.log(`New mode: ${menuMode}`);
 		}
-		*/
+	}
+
+	Timer {
+		id: middleVisibleTrueAfterAnimTimer
+		interval: detailsAnimationDuration
+		onTriggered: {
+			gameflowView.middleVisible = true;
+		}
 	}
 }

@@ -177,6 +177,7 @@ FocusScope {
 		height: parent.height * 0.8
 
 		focus: parent.focus
+		keyNavigationWraps: true
 
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.bottom: parent.bottom
@@ -421,22 +422,10 @@ FocusScope {
 		}
 
 		Keys.onUpPressed: {
-			if (currentIndex === 0) {
-				if (curPage === "/" && settings["carousel_up_menu"]) {
-					screen = 0;
-				} else {
-					currentIndex = count - 1;
-				}
+			if (curPage === "/" && settings["carousel_up_menu"] && currentIndex === 0) {
+				screen = 0;
 			} else {
 				decrementCurrentIndex();
-			}
-		}
-
-		Keys.onDownPressed: {
-			if (currentIndex === count - 1) {
-				currentIndex = 0;
-			} else {
-				incrementCurrentIndex();
 			}
 		}
 
