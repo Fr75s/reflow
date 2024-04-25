@@ -23,7 +23,7 @@ FocusScope {
 		id: pageModel
 
 		ListElement {
-			page: "Collections"
+			pageLocID: "main_menu_collections"
 			screenIndex: 2
 		}
 
@@ -35,7 +35,7 @@ FocusScope {
 		*/
 
 		ListElement {
-			page: "Settings"
+			pageLocID: "main_menu_settings"
 			screenIndex: 1
 		}
 	}
@@ -95,7 +95,7 @@ FocusScope {
 					width: parent.width
 					height: pageSelectionBox.height * 0.35
 
-					text: page
+					text: loc[pageLocID]
 					color: colors.text
 					horizontalAlignment: Text.AlignHCenter
 					verticalAlignment: Text.AlignVCenter

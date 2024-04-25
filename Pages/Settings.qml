@@ -24,11 +24,12 @@ FocusScope {
 	 * 	The following types are setting types, which contain the following properties:
 	 * 	setting: The name of the setting to change.
 	 * 	xinfo [OPTIONAL]: Additional information regarding the setting.
+	 * 	sp_action [OPTIONAL]: ID of a special action to perform when this setting is changed.
 	 *
 	 * 	"setting_bin": A toggleable setting, which can be set to true or false.
-	 * 	"setting_list": A setting which selects one option from a fixed list of items.
+	 * 	"setting_map": A setting which selects one option from a fixed list of items.
 	 * 		UNIQUE PROPERTIES:
-	 * 		list: The fixed list of items this setting chooses from
+	 * 		map: An object whose keys are the items of a list to select and whose values are the items to be displayed
 	 * 	"setting_range": A setting which sets the value to a value in the given range.
 	 * 		UNIQUE PROPERTIES:
 	 * 		lower: The lower bound of the range
@@ -50,10 +51,10 @@ FocusScope {
 					setting: "light"
 				},
 				{
-					type: "setting_list",
+					type: "setting_map",
 					name: loc.settings_appearance_theme,
 					setting: "theme",
-					list: themes
+					map: themes
 				},
 				{
 					type: "setting_range",
@@ -79,6 +80,20 @@ FocusScope {
 			]
 		},
 		{
+			type: "page",
+			id: "localization",
+			name: loc.settings_subpage_localization,
+			items: [
+				{
+					type: "setting_map",
+					name: loc.settings_localization_lang,
+					sp_action: "refresh_for_lang",
+					setting: "lang",
+					map: langNameMap
+				},
+			]
+		},
+		{
 			type: "setting_action",
 			name: loc.settings_other_repreload,
 			header: loc.settings_other,
@@ -92,9 +107,9 @@ FocusScope {
 	property string curPage: "/"
 	property var curPageContents: settingData
 
-	property var themes: [
-		"retro"
-	]
+	property var themes: {
+		"retro": "Modern"
+	}
 
 
 
@@ -344,12 +359,12 @@ FocusScope {
 							anchors.fill: parent
 							color: colors.text
 
-							horizontalAlignment: (type === "setting_list") ? Text.AlignRight: Text.AlignHCenter
+							horizontalAlignment: (type === "setting_map") ? Text.AlignRight: Text.AlignHCenter
 							verticalAlignment: Text.AlignVCenter
 
-							text: (type === "setting_range") ? formatRangeStr() : (settings[setting] ? settings[setting] : "")
+							text: (settings[setting] ? ((type === "setting_range") ? formatRangeStr() : (settingModel.get(index).map[settings[setting]])) : "")
 
-							visible: (type === "setting_list") || (type === "setting_range")
+							visible: (type === "setting_map") || (type === "setting_range")
 
 							font {
 								family: display.name
@@ -442,12 +457,23 @@ FocusScope {
 	// Behavior upon interacting with a setting, either by clicking or pressing accept.
 	function settingInteraction(index) {
 		let metaSetting = settingModel.get(index);
+		// Default setting change
 		switch (metaSetting.type) {
 			case "page":
 				goToChildPage(metaSetting.id);
 				break;
 			case "setting_bin":
 				settings[metaSetting.setting] = !settings[metaSetting.setting];
+				handleSettingChange(metaSetting.setting);
+				break;
+			case "setting_map":
+				let settingList = Object.keys(metaSetting.map);
+				let oldIndex = settingList.indexOf(settings[metaSetting.setting]);
+				if (oldIndex < settingList.length - 1) {
+					settings[metaSetting.setting] = settingList[oldIndex + 1];
+				} else {
+					settings[metaSetting.setting] = settingList[0];
+				}
 				handleSettingChange(metaSetting.setting);
 				break;
 			case "setting_range":
@@ -459,11 +485,32 @@ FocusScope {
 			case "setting_action":
 				settingsRoot.actionTaken(metaSetting.setting);
 		}
+
+		if (metaSetting.sp_action)
+			settingSpecialAction(metaSetting.sp_action);
 	}
 
 	function settingSideInteraction(index, dir) {
 		let metaSetting = settingModel.get(index);
 		switch (metaSetting.type) {
+			case "setting_map":
+				let settingList = Object.keys(metaSetting.map);
+				let oldIndex = settingList.indexOf(settings[metaSetting.setting]);
+				if (dir == 1) {
+					if (oldIndex < settingList.length - 1) {
+						settings[metaSetting.setting] = settingList[oldIndex + 1];
+					} else {
+						settings[metaSetting.setting] = settingList[0];
+					}
+				} else if (dir == 0) {
+					if (oldIndex > 0) {
+						settings[metaSetting.setting] = settingList[oldIndex - 1];
+					} else {
+						settings[metaSetting.setting] = settingList[settingList.length - 1];
+					}
+				}
+				handleSettingChange(metaSetting.setting);
+				break;
 			case "setting_range":
 				if (dir == 1 && settings[metaSetting.setting] < metaSetting.maxVal) {
 					settings[metaSetting.setting] += metaSetting.step;
@@ -472,6 +519,18 @@ FocusScope {
 				}
 				settings[metaSetting.setting] = Math.round(settings[metaSetting.setting] * 1000) / 1000
 				handleSettingChange(metaSetting.setting);
+				break;
+		}
+
+		if (metaSetting.sp_action)
+			settingSpecialAction(metaSetting.sp_action);
+	}
+
+	function settingSpecialAction(action) {
+		switch (action) {
+			case "refresh_for_lang":
+				curPageContents = settingData[2].items;
+				refreshModel();
 				break;
 		}
 	}

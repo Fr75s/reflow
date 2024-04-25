@@ -452,16 +452,17 @@ FocusScope {
 		// Toggle details
 		if (api.keys.isDetails(event)) {
 			event.accepted = true;
-			console.log("Toggling details...");
-			if (menuMode === 0) {
-				menuMode = 1;
-				gameflowView.middleVisible = false;
-				middleVisibleTrueAfterAnimTimer.stop();
-			} else {
-				menuMode = 0;
-				middleVisibleTrueAfterAnimTimer.start();
+			if (!event.isAutoRepeat) {
+				console.log("Toggling details...");
+				if (menuMode === 0) {
+					menuMode = 1;
+					gameflowView.middleVisible = false;
+					middleVisibleTrueAfterAnimTimer.stop();
+				} else {
+					menuMode = 0;
+					middleVisibleTrueAfterAnimTimer.start();
+				}
 			}
-			console.log(`New mode: ${menuMode}`);
 		}
 	}
 
