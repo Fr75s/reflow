@@ -22,17 +22,24 @@ FocusScope {
 		reflSpacing: active ? 4 + theme.height * 0.5 + currentGameHeight : 4
 		reflAnimDuration: 400
 
-		width: currentGameWidth
+		width: active ? theme.height * 0.25 : currentGameWidth
+		Behavior on width {
+			NumberAnimation {
+				duration: 400
+				easing.type: Easing.InOutCubic
+			}
+		}
+
 		z: 0
 
-		x: (active ? parent.width * 0.05 : parent.width * 0.5 - width / 2)
+		x: (active ? parent.width * 0.05 : parent.width * 0.5 - currentGameWidth / 2)
 		Behavior on x {
 			NumberAnimation {
 				duration: 400
 				easing.type: Easing.InOutCubic
 			}
 		}
-		anchors.bottomMargin: (active ? parent.height * 0.85 - currentGameHeight : parent.height * 0.3)
+		anchors.bottomMargin: (active ? parent.height * 0.85 - height : parent.height * 0.3)
 		Behavior on anchors.bottomMargin {
 			NumberAnimation {
 				duration: 400

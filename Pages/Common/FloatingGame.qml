@@ -39,6 +39,7 @@ Item {
 
 			source: game ? game.assets.boxFront || missingSource : missingSource
 			fillMode: Image.PreserveAspectFit
+			verticalAlignment: Image.AlignTop
 			asynchronous: true
 
 			z: parent.z + 3

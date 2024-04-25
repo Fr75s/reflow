@@ -45,6 +45,8 @@ FocusScope {
 
         "carousel_zoom": api.memory.has("carousel_zoom") ? api.memory.get("carousel_zoom") : 1,
         "carousel_up_menu": api.memory.has("carousel_up_menu") ? api.memory.get("carousel_up_menu") : true,
+
+        "lang": api.memory.has("lang") ? api.memory.get("lang") : "en"
     }
 
     property var colorschemes: {
@@ -94,10 +96,9 @@ FocusScope {
 
 	// Get all languages
 	property var langs: localizationData.getLangs()
-	// Get current Language
-	property string currentLanguage: api.memory.has("currentLanguage") ? api.memory.get("currentLanguage") : "en"
+    property var langNameMap: localizationData.getNameMap();
 	// Alias for the object that is the localization's current language
-	property var loc: localizationData.getLocalization(currentLanguage)
+	property var loc: localizationData.getLocalization(settings.lang)
 
     // Extra Data
     // Default box aspect ratios
