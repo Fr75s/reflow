@@ -31,6 +31,7 @@ FocusScope {
 
     // Just a few fonts, needs [id].name to work in font.family
 	FontLoader { id: display; source: "./assets/font/Outfit-Light.otf" }
+	FontLoader { id: readtext; source: "./assets/font/Inter-Regular.ttf" }
 
 	IconFont {
         id: icons
@@ -106,9 +107,13 @@ FocusScope {
         id: defaultAspectRatios
     }
 
-    // Missing game image
-    property url missingSource: "assets/no_game.png"
-
+    // Missing image placeholders
+    // Missing Box Art
+    property url missingSource: "assets/placeholder/no_game.png"
+    // Missing Logo
+    property url missingLogo: "assets/placeholder/no_logo.png"
+    // Missing Screenshots/Art
+    property url missingArt: "assets/placeholder/no_art.png"
 
     // Actual Theme
 

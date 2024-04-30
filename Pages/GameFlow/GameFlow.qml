@@ -76,6 +76,8 @@ FocusScope {
 	PathView {
 		id: gameflowView
 
+		z: 100
+
 		width: parent.width
 		height: parent.height
 
@@ -84,7 +86,7 @@ FocusScope {
 		anchors.left: parent.left
 		anchors.right: parent.right
 
-		y: (menuMode === 0 ? parent.height * -0.3 : (gameWidth / averageAspectRatio))
+		y: (menuMode === 0 ? parent.height * -0.3 : (gameWidth / averageAspectRatio) * 1.2)
 		Behavior on y {
 			NumberAnimation {
 				duration: detailsAnimationDuration
@@ -93,7 +95,7 @@ FocusScope {
 		}
 
 		focus: parent.focus && menuMode === 0
-		interactive: enableMouse
+		interactive: enableMouse && menuMode === 0
 
 		model: currentModel
 		delegate: FloatingGame {
@@ -102,7 +104,7 @@ FocusScope {
 			aar: averageAspectRatio
 			leftRightCenter: gameflowView.realCurrentIndex === index ? 0 : (x + width / 2 > sw / 2 ? 2 : 1)
 
-			visible: (index !== gameflowView.realCurrentIndex) || gameflowView.middleVisible
+			//visible: (index !== gameflowView.realCurrentIndex) || gameflowView.middleVisible
 			reflSpacing: 4
 			reflAnimDuration: menuMode === 0 ? 0 : detailsAnimationDuration
 
@@ -198,7 +200,8 @@ FocusScope {
 		// Click to decrement collection
 		MouseArea {
 			anchors.fill: parent
-			enabled: menuMode === 0 && enableMouse
+			enabled: parent.enabled
+			propagateComposedEvents: !enabled
 			onClicked: {
 				changeCollection(currentCollectionIndex - 1);
 			}
@@ -214,6 +217,7 @@ FocusScope {
 		anchors.bottom: parent.bottom
 
 		enabled: menuMode === 0 && enableMouse
+		propagateComposedEvents: !enabled
 		onClicked: {
 			changeCollection(currentCollectionIndex + 1);
 		}
@@ -222,10 +226,30 @@ FocusScope {
 	GameDetails {
 		id: gameDetailsPage
 
-		anchors.fill: parent
+		width: parent.width
+		height: parent.height
 
 		active: menuMode === 1
-		visible: !gameflowView.middleVisible
+
+		opacity: active ? 1 : 0
+		Behavior on opacity {
+			NumberAnimation {
+				easing.type: Easing.InOutQuad
+				duration: detailsAnimationDuration
+			}
+		}
+
+		x: 0
+		y: active ? 0 : theme.height * 0.15
+		Behavior on y {
+			NumberAnimation {
+				easing.type: Easing.InOutCubic
+				duration: detailsAnimationDuration
+			}
+		}
+
+		z: 0
+
 		focus: active
 
 		currentGame: currentCollection.games.get(gameflowView.selectionIndex)
@@ -327,12 +351,15 @@ FocusScope {
 	function changeCollection(newIndex) {
 		// Change the collection
 		currentCollectionIndex = newIndex;
-
 		if (currentCollectionIndex < 0) {
 			currentCollectionIndex = api.collections.count - 1;
 		} else if (currentCollectionIndex >= api.collections.count) {
 			currentCollectionIndex = 0;
 		}
+
+		// Activate cooldown for details screen
+		detailsKeyEnabled = false;
+		collectionChangeDetailsCooldown.restart();
 
 		// Update the model and currently selected game
 		update();
@@ -448,11 +475,13 @@ FocusScope {
 		status.hideStatus();
 	}
 
+	property bool detailsKeyEnabled: true
+
 	Keys.onPressed: {
 		// Toggle details
 		if (api.keys.isDetails(event)) {
 			event.accepted = true;
-			if (!event.isAutoRepeat) {
+			if (!event.isAutoRepeat && detailsKeyEnabled) {
 				console.log("Toggling details...");
 				if (menuMode === 0) {
 					menuMode = 1;
@@ -471,6 +500,14 @@ FocusScope {
 		interval: detailsAnimationDuration
 		onTriggered: {
 			gameflowView.middleVisible = true;
+		}
+	}
+
+	Timer {
+		id: collectionChangeDetailsCooldown
+		interval: 300
+		onTriggered: {
+			detailsKeyEnabled = true;
 		}
 	}
 }
