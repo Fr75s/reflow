@@ -10,6 +10,26 @@ Item {
 
 	clip: false
 
+	// Backdrop
+	Rectangle {
+		id: galleryBackdrop
+		anchors.fill: parent
+		color: "#000000"
+	}
+
+	DropShadow {
+		anchors.fill: galleryBackdrop
+
+		horizontalOffset: 0
+		verticalOffset: 10
+
+		radius: 20
+		samples: 21
+		color: "#ff000000"
+
+		source: galleryBackdrop
+	}
+
 	// Gallery
 	ListView {
 		id: galleryView
@@ -20,6 +40,8 @@ Item {
 		orientation: ListView.Horizontal
 		snapMode: ListView.SnapToItem
 		highlightRangeMode: ListView.StrictlyEnforceRange
+		highlightMoveDuration: 300
+		keyNavigationWraps: true
 		clip: true
 
 		model: game ? game.assets.screenshotList : []
@@ -57,8 +79,8 @@ Item {
 		radius: height / 2
 
 		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.bottom: parent.bottom
-		anchors.bottomMargin: height * 0.5
+		anchors.top: parent.top
+		anchors.topMargin: height * 0.5
 
 		Text {
 			anchors.fill: parent
@@ -90,5 +112,4 @@ Item {
 
 		source: progressIndicator
 	}
-
 }

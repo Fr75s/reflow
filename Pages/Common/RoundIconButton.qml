@@ -26,7 +26,7 @@ Item {
 
 	Image {
 		anchors.fill: parent
-		anchors.margins: parent.height * 0.15
+		anchors.margins: parent.height * 0.2
 
 		fillMode: Image.PreserveAspectFit
 

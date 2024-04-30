@@ -503,6 +503,14 @@ FocusScope {
 				}
 			}
 		}
+
+		if (menuMode === 1) {
+			if (api.keys.isCancel(event)) {
+				event.accepted = true;
+				menuMode = 0;
+				middleVisibleTrueAfterAnimTimer.start();
+			}
+		}
 	}
 
 	Timer {

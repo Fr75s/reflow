@@ -17,6 +17,10 @@ FocusScope {
 	property int showcaseAOpacityDuration: 300
 
 	readonly property url iconsDir: "../../assets/icon/"
+	// Show game stats instead of description
+	property bool showStats: false
+	// Show and focus screenshot gallery
+	property bool showGallery: false
 
 	// Side box
 	CoverFit {
@@ -72,6 +76,14 @@ FocusScope {
 			width: parent.width * 0.4
 			height: parent.height * 0.6
 
+			opacity: showStats ? 0 : 1
+			Behavior on opacity {
+				NumberAnimation {
+					duration: 300
+				}
+			}
+			z: stats.z + 10
+
 			anchors.left: parent.left
 			anchors.leftMargin: parent.width * 0.05
 			anchors.bottom: parent.bottom
@@ -88,7 +100,7 @@ FocusScope {
 				id: descriptionText
 				width: parent.width
 
-				text: currentGame.description || "[no description]"
+				text: parseAndRemoveImg(currentGame.description) || "[no description]"
 				color: colors.text
 
 				wrapMode: Text.Wrap
@@ -96,6 +108,15 @@ FocusScope {
 				font {
 					family: readtext.name
 					pixelSize: theme.height * 0.02
+				}
+
+				// Remove all <img> tags from content
+				function parseAndRemoveImg(content) {
+					if (content) {
+						// The forbidden art of parsing HTML with regex
+						return content.replace(/<img(.*?)>/g, "");
+					}
+					return "[no description]";
 				}
 			}
 
@@ -109,6 +130,7 @@ FocusScope {
 			KeyNavigation.right: playButton
 		}
 
+		// Outline for focused description text
 		Rectangle {
 			anchors.fill: descriptionContainer
 			anchors.margins: theme.height * -0.01
@@ -130,6 +152,82 @@ FocusScope {
 			}
 		}
 
+		Item {
+			id: stats
+
+			opacity: showStats ? 1 : 0
+			Behavior on opacity {
+				NumberAnimation {
+					duration: 300
+				}
+			}
+			anchors.fill: descriptionContainer
+
+			Text {
+				id: statsMain
+
+				anchors.fill: parent
+
+				text: `<b>${currentGame.title}</b><br>
+				<font size="7">
+				${currentGame.releaseYear > 0 ? currentGame.releaseYear : loc.details_not_applicable}
+				</font><br><br>
+				${loc.details_last_played}: ${currentGame.lastPlayed.toLocaleDateString()}<br>
+				${loc.details_play_time}: <i>${formattedPlaytime(currentGame.playTime)}</i><br>
+				${loc.details_rating}: ${formattedRating(currentGame.rating)}<br><br>
+				`;
+				color: colors.text
+
+				wrapMode: Text.Wrap
+
+				font {
+					family: readtext.name
+					pixelSize: theme.height * 0.02
+				}
+
+				function formattedPlaytime(playtime) {
+					if (playtime === 0) {
+						return loc.details_play_time_never
+					} else if (playtime < 60) {
+						return playtime + loc.details_play_time_s
+					} else if (playtime < 3600) {
+						return Math.floor(playtime / 60) + loc.details_play_time_m
+					} else {
+						return Math.floor(playtime / 3600) + loc.details_play_time_h
+					}
+				}
+
+				function formattedRating(rating) {
+					if (rating > 0) {
+						return `${Math.round(rating * 100)} / 100`;
+					} else {
+						return loc.details_not_applicable;
+					}
+				}
+			}
+
+			Text {
+				id: statsSub
+
+				anchors.fill: parent
+				verticalAlignment: Text.AlignBottom
+
+				text: `${currentGame.developer}<br>
+				<i>${currentGame.publisher}</i>
+				`;
+				color: colors.text
+
+				wrapMode: Text.Wrap
+
+				font {
+					family: readtext.name
+					pixelSize: theme.height * 0.015
+				}
+			}
+		}
+
+
+
 		// Screenshot Gallery
 		Rectangle {
 			width: parent.width * 0.45
@@ -146,15 +244,6 @@ FocusScope {
 				anchors.fill: parent
 				imageList: currentGame.assets.screenshotList
 			}
-
-			/*
-			ScreenGallery {
-				anchors.fill: parent
-				game: currentGame
-
-				focus: focusMode === 2
-			}
-			*/
 		}
 
 		// Interaction Buttons
@@ -183,6 +272,7 @@ FocusScope {
 					launchGame(currentGame);
 				}
 
+				KeyNavigation.left: showStats ? null : descriptionContainer
 				KeyNavigation.right: favButton
 			}
 
@@ -209,7 +299,7 @@ FocusScope {
 
 				icon: iconsDir + "info.png"
 				onAction: {
-					console.log("showing info");
+					showStats = !showStats;
 				}
 
 				KeyNavigation.left: favButton
@@ -224,7 +314,8 @@ FocusScope {
 
 				icon: iconsDir + "gallery.png"
 				onAction: {
-					console.log("showing gallery");
+					if (currentGame && currentGame.assets.screenshotList.length > 0)
+						showGallery = true;
 				}
 
 				KeyNavigation.left: infoButton
@@ -232,4 +323,42 @@ FocusScope {
 		}
 	}
 
+	ScreenGallery {
+		width: parent.width * 0.95
+		height: parent.height * 0.8
+
+		anchors.horizontalCenter: parent.horizontalCenter
+		y: showGallery ? parent.height * 0.05 : parent.height * 0.15
+		Behavior on y {
+			NumberAnimation {
+				easing.type: Easing.InOutQuad
+				duration: 300
+			}
+		}
+
+		game: currentGame
+
+		opacity: showGallery ? 1 : 0
+		Behavior on opacity {
+			NumberAnimation {
+				duration: 300
+			}
+		}
+
+		focus: showGallery
+
+		Keys.onPressed: {
+			if (api.keys.isDetails(event)) {
+				event.accepted = true;
+				showGallery = false;
+				galleryButton.forceActiveFocus();
+			}
+
+			if (api.keys.isCancel(event)) {
+				event.accepted = true;
+				showGallery = false;
+				galleryButton.forceActiveFocus();
+			}
+		}
+	}
 }

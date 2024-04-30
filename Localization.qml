@@ -7,6 +7,15 @@ Item {
 		"en": {
 			name: "English (US)",
 
+			details_not_applicable: "N/A",
+			details_last_played: "Last Played",
+			details_play_time: "Play Time",
+			details_play_time_never: "Never",
+			details_play_time_s: " sec.",
+			details_play_time_m: " min.",
+			details_play_time_h: " hrs.",
+			details_rating: "Rating",
+
 			main_menu_collections: "Collections",
 			main_menu_settings: "Settings",
 			main_menu_search: "Search",

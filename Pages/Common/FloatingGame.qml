@@ -55,6 +55,20 @@ Item {
 					gameBoxArtBackBlur.visible = Math.abs((gameBoxArt.sourceSize.width / gameBoxArt.sourceSize.height) - aar) >= 0.1
 				}
 			}
+
+			Image {
+				id: favoriteBanner
+
+				width: Math.min(parent.width * 0.5, parent.height * 0.5)
+				height: width
+				anchors.top: parent.top
+				anchors.right: parent.right
+
+				visible: game ? game.favorite : false
+				source: "../../assets/icon/fav_banner.png"
+				fillMode: Image.PreserveAspectFit
+				asynchronous: true
+			}
 		}
 
 		Image {
