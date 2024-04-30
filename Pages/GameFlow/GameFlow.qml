@@ -133,12 +133,16 @@ FocusScope {
 		}
 
 		Keys.onLeftPressed: {
-			if (middleVisible)
+			if (middleVisible) {
+				forceWaitSecondaryInteractions()
 				decrementCurrentIndex();
+			}
 		}
 		Keys.onRightPressed: {
-			if (middleVisible)
+			if (middleVisible) {
+				forceWaitSecondaryInteractions()
 				incrementCurrentIndex();
+			}
 		}
 		Keys.onUpPressed: {
 			if (settings["carousel_up_menu"])
@@ -169,7 +173,8 @@ FocusScope {
 			// Activate Collection Selection menu
 			if (api.keys.isPageUp(event)) {
 				event.accepted = true;
-				gameflowRoot.activateFlowLSM(currentCollectionIndex);
+				if (detailsKeyEnabled)
+					gameflowRoot.activateFlowLSM(currentCollectionIndex);
 			}
 		}
 
@@ -282,6 +287,12 @@ FocusScope {
 
 	// Functionality
 
+	// Force waiting for details/collections menu
+	function forceWaitSecondaryInteractions() {
+		detailsKeyEnabled = false;
+		collectionChangeDetailsCooldown.restart();
+	}
+
 	// Update current model
 	function updateModel() {
 		// Reset Model
@@ -358,8 +369,7 @@ FocusScope {
 		}
 
 		// Activate cooldown for details screen
-		detailsKeyEnabled = false;
-		collectionChangeDetailsCooldown.restart();
+		forceWaitSecondaryInteractions()
 
 		// Update the model and currently selected game
 		update();
