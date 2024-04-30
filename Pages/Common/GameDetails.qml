@@ -5,6 +5,8 @@ import "../Common"
 FocusScope {
 	id: gdRoot
 
+	signal favoriteUpdated(bool newValue)
+
 	property var currentGame: null
 
 	property bool active: false
@@ -285,6 +287,7 @@ FocusScope {
 				icon: iconsDir + (currentGame.favorite ? "fav_full.png" : "fav.png")
 				onAction: {
 					currentGame.favorite = !currentGame.favorite;
+					gdRoot.favoriteUpdated(currentGame.favorite);
 				}
 
 				KeyNavigation.left: playButton

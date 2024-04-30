@@ -260,6 +260,15 @@ FocusScope {
 		currentGame: currentCollection.games.get(gameflowView.selectionIndex)
 		currentGameWidth: gameWidth
 		currentAAR: averageAspectRatio
+
+		onFavoriteUpdated: {
+			// Update all that are same (infinite carousel handling)
+			for (let i = 0; i < currentModel.count; i++) {
+				if (currentModel.get(i).title === currentModel.get(gameflowView.realCurrentIndex).title) {
+					currentModel.set(i, {"favorite": newValue});
+				}
+			}
+		}
 	}
 
 

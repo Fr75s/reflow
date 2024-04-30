@@ -64,7 +64,7 @@ Item {
 				anchors.top: parent.top
 				anchors.right: parent.right
 
-				visible: game ? game.favorite : false
+				opacity: game.favorite ? 1 : 0
 				source: "../../assets/icon/fav_banner.png"
 				fillMode: Image.PreserveAspectFit
 				asynchronous: true
