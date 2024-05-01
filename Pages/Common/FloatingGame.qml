@@ -5,6 +5,9 @@ import QtGraphicalEffects 1.15
 Item {
 	id: effectHandlerContainer
 
+	signal flickUp
+	signal flickDown
+
 	property var game: null // Game Item Model
 
 	property real aar: 1 // Average Aspect Ratio of boxes in current collection
@@ -39,7 +42,7 @@ Item {
 
 			source: game ? game.assets.boxFront || missingSource : missingSource
 			fillMode: Image.PreserveAspectFit
-			verticalAlignment: Image.AlignTop
+			verticalAlignment: Image.AlignVCenter
 			asynchronous: true
 
 			z: parent.z + 3
@@ -64,7 +67,7 @@ Item {
 				anchors.top: parent.top
 				anchors.right: parent.right
 
-				opacity: game.favorite ? 1 : 0
+				opacity: game ? (game.favorite ? 1 : 0) : 0
 				source: "../../assets/icon/fav_banner.png"
 				fillMode: Image.PreserveAspectFit
 				asynchronous: true
@@ -219,7 +222,10 @@ Item {
 			onFlickStarted: {
 				// Flick up to go to main menu
 				if (verticalVelocity < -1000) {
-					screen = 0;
+					effectHandlerContainer.flickUp();
+				}
+				if (verticalVelocity > 1000) {
+					effectHandlerContainer.flickDown();
 				}
 			}
 

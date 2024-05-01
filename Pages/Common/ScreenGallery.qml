@@ -4,6 +4,8 @@ import QtGraphicalEffects 1.15
 Item {
 	id: galleryContainer
 
+	signal close
+
 	property var game: null
 
 	property real indicatorHeight: height * 0.1
@@ -36,6 +38,7 @@ Item {
 		anchors.fill: parent
 
 		focus: parent.focus
+		enabled: focus
 
 		orientation: ListView.Horizontal
 		snapMode: ListView.SnapToItem
@@ -52,6 +55,21 @@ Item {
 			source: game ? game.assets.screenshotList[index] || missingArt : missingArt
 			fillMode: Image.PreserveAspectFit
 			asynchronous: true
+
+			// Flick down to hide
+			Flickable {
+				anchors.fill: parent
+				enabled: galleryView.focus
+
+				flickableDirection: Flickable.VerticalFlick
+				onFlickStarted: {
+					// Flick down to close
+					if (verticalVelocity < -800) {
+						console.log("Closing Gallery")
+						galleryContainer.close();
+					}
+				}
+			}
 		}
 		interactive: game && game.assets.screenshotList.length > 1
 	}

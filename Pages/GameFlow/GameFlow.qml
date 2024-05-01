@@ -112,6 +112,15 @@ FocusScope {
 			z: (sideCount + 2) - Math.abs(gameflowView.realCurrentIndex - index) + gameflowView.count;
 
 			anchors.bottom: parent.bottom
+
+			onFlickUp: {
+				screen = 0;
+			}
+			onFlickDown: {
+				menuMode = 1;
+				gameflowView.middleVisible = false;
+				middleVisibleTrueAfterAnimTimer.stop();
+			}
 		}
 
 		property int realCurrentIndex: (currentIndex + (sideCount + 1)) % currentModel.count
@@ -228,6 +237,7 @@ FocusScope {
 		}
 	}
 
+	// Details Screen
 	GameDetails {
 		id: gameDetailsPage
 
@@ -268,6 +278,10 @@ FocusScope {
 					currentModel.set(i, {"favorite": newValue});
 				}
 			}
+		}
+		onClose: {
+			menuMode = 0;
+			middleVisibleTrueAfterAnimTimer.start();
 		}
 	}
 
@@ -333,14 +347,27 @@ FocusScope {
 	function getAverageAspectRatio(collection, broadcastProgress = 0) {
 		console.log("Getting average aspect ratio for " + collection.name);
 		if (defaultAspectRatios && collection.shortName in defaultAspectRatios.data) {
+			// Get average aspect ratio from default list
 			console.log("Getting from default aspect ratios");
 			console.log("Value: " + defaultAspectRatios.data[collection.shortName]);
 			return defaultAspectRatios.data[collection.shortName];
 		} else if (preloadData && collection.shortName in preloadData && "averageAspectRatio" in preloadData[collection.shortName]) {
+			// Get average aspect ratio from preloaded data
 			console.log("Getting from preload data");
 			console.log("Value: " + preloadData[collection.shortName]["averageAspectRatio"]);
 			return preloadData[collection.shortName]["averageAspectRatio"];
 		} else {
+			// Calculate average aspect ratio from games
+			// Calculate using collection default
+			if (collection.assets.boxFront) {
+				// Use average aspect ratio of collection default
+				testAspectRatio.source = collection.assets.boxFront;
+				if (testAspectRatio.sourceSize.width > 0 && testAspectRatio.sourceSize.height > 0) {
+					return testAspectRatio.sourceSize.width / testAspectRatio.sourceSize.height;
+				}
+			}
+
+			// No/invalid collection default, use game list
 			console.log("Calculating average aspect for " + collection.name);
 			let aspectRatios = [];
 			let aspectTests = collection.games.count;
@@ -364,7 +391,11 @@ FocusScope {
 			}
 
 			console.log("Calculation finished");
-			return aspectRatios.length > 0 ? aspectRatios[Math.floor((aspectRatios.length - 1) / 2)] : (8 / 7);
+			if (aspectRatios.length > 0) {
+				return aspectRatios[Math.floor((aspectRatios.length - 1) / 2)];
+			} else {
+				return 1;
+			}
 		}
 	}
 

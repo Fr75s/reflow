@@ -6,6 +6,7 @@ FocusScope {
 	id: gdRoot
 
 	signal favoriteUpdated(bool newValue)
+	signal close
 
 	property var currentGame: null
 
@@ -174,7 +175,7 @@ FocusScope {
 				<font size="7">
 				${currentGame.releaseYear > 0 ? currentGame.releaseYear : loc.details_not_applicable}
 				</font><br><br>
-				${loc.details_last_played}: ${currentGame.lastPlayed.toLocaleDateString()}<br>
+				${loc.details_last_played}: ${!isNaN(currentGame.lastPlayed) ? currentGame.lastPlayed.toLocaleDateString() : loc.details_last_played_never}<br>
 				${loc.details_play_time}: <i>${formattedPlaytime(currentGame.playTime)}</i><br>
 				${loc.details_rating}: ${formattedRating(currentGame.rating)}<br><br>
 				`;
@@ -326,6 +327,7 @@ FocusScope {
 		}
 	}
 
+	// Fullscreen Screenshot Gallery
 	ScreenGallery {
 		width: parent.width * 0.95
 		height: parent.height * 0.8
@@ -350,17 +352,39 @@ FocusScope {
 
 		focus: showGallery
 
+		onClose: {
+			closeGallery();
+		}
+
 		Keys.onPressed: {
 			if (api.keys.isDetails(event)) {
 				event.accepted = true;
-				showGallery = false;
-				galleryButton.forceActiveFocus();
+				closeGallery();
 			}
 
 			if (api.keys.isCancel(event)) {
 				event.accepted = true;
-				showGallery = false;
-				galleryButton.forceActiveFocus();
+				closeGallery();
+			}
+		}
+
+		function closeGallery() {
+			showGallery = false;
+			galleryButton.forceActiveFocus();
+		}
+	}
+
+	Flickable {
+		width: parent.width
+		height: parent.height * 0.2
+
+		anchors.bottom: parent.bottom
+		enabled: parent.focus
+
+		flickableDirection: Flickable.VerticalFlick
+		onFlickStarted: {
+			if (verticalVelocity > 800) {
+				gdRoot.close();
 			}
 		}
 	}

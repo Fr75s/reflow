@@ -9,8 +9,9 @@ Item {
 
 			details_not_applicable: "N/A",
 			details_last_played: "Last Played",
+			details_last_played_never: "Never",
 			details_play_time: "Play Time",
-			details_play_time_never: "Never",
+			details_play_time_never: "Never Played",
 			details_play_time_s: " sec.",
 			details_play_time_m: " min.",
 			details_play_time_h: " hrs.",

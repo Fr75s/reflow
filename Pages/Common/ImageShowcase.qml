@@ -5,6 +5,9 @@ Item {
 	property int showcaseAOpacityDuration: 300
 
 	property var imageList: []
+	onImageListChanged: {
+		showcaseIndex = 0;
+	}
 
 	Image {
 		id: screenshotShowcaseA
