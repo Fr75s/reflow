@@ -10,11 +10,11 @@ x: 3D boxes
 x: Built-in update detector
 x: Search functionality
 x: Non-infinite gameflow
+x: Box Art / Marquee switch (further information required)
 
-# 0.3.0 TODO
+# 0.3.0
 
 - Add details screen
-x: Box Art / Marquee switch
 - Collection selector menu (Accessible by pressing Page Up (L2) or swiping right from bottom left)
 - Click/Touch based gameflow scrolling
 

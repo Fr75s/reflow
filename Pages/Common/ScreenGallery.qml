@@ -6,7 +6,7 @@ Item {
 
 	signal close
 
-	property var game: null
+	property var imageList: []
 
 	property real indicatorHeight: height * 0.1
 
@@ -47,12 +47,12 @@ Item {
 		keyNavigationWraps: true
 		clip: true
 
-		model: game ? game.assets.screenshotList : []
+		model: imageList
 		delegate: Image {
 			width: galleryContainer.width
 			height: galleryContainer.height
 
-			source: game ? game.assets.screenshotList[index] || missingArt : missingArt
+			source: imageList[index] || missingArt
 			fillMode: Image.PreserveAspectFit
 			asynchronous: true
 
@@ -71,7 +71,7 @@ Item {
 				}
 			}
 		}
-		interactive: game && game.assets.screenshotList.length > 1
+		interactive: imageList.length > 1
 	}
 
 	// Placeholder Image
@@ -82,7 +82,7 @@ Item {
 		fillMode: Image.PreserveAspectFit
 		asynchronous: true
 
-		visible: !game || (game.assets.screenshotList.length === 0)
+		visible: imageList.length === 0
 	}
 
 	// Progress Indicator
@@ -103,7 +103,7 @@ Item {
 		Text {
 			anchors.fill: parent
 
-			text: (galleryView.currentIndex + 1) + " / " + game.assets.screenshotList.length
+			text: (galleryView.currentIndex + 1) + " / " + imageList.length
 			color: colors.text
 
 			horizontalAlignment: Text.AlignHCenter
@@ -119,7 +119,7 @@ Item {
 
 	DropShadow {
 		anchors.fill: progressIndicator
-		visible: game && game.assets.screenshotList.length > 1
+		visible: imageList.length > 1
 
 		horizontalOffset: 0
 		verticalOffset: 5

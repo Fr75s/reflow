@@ -65,7 +65,7 @@ Item {
 		interval: 300
 
 		onTriggered: {
-			if (showcaseIndex < currentGame.assets.screenshotList.length - 1)
+			if (showcaseIndex < imageList.length - 1)
 				showcaseIndex += 1;
 			else
 				showcaseIndex = 0;

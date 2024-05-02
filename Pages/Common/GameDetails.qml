@@ -245,7 +245,7 @@ FocusScope {
 
 			ImageShowcase {
 				anchors.fill: parent
-				imageList: currentGame.assets.screenshotList
+				imageList: allScreensAsList(currentGame);
 			}
 		}
 
@@ -318,7 +318,7 @@ FocusScope {
 
 				icon: iconsDir + "gallery.png"
 				onAction: {
-					if (currentGame && currentGame.assets.screenshotList.length > 0)
+					if (currentGame && allScreensAsList(currentGame).length > 0)
 						showGallery = true;
 				}
 
@@ -341,7 +341,7 @@ FocusScope {
 			}
 		}
 
-		game: currentGame
+		imageList: allScreensAsList(currentGame);
 
 		opacity: showGallery ? 1 : 0
 		Behavior on opacity {
@@ -387,5 +387,23 @@ FocusScope {
 				gdRoot.close();
 			}
 		}
+	}
+
+	// Compile all screenshot/art assets into one list
+	/* Assets (in order):
+	 * - titlescreen
+	 * - screenshotList
+	 * - backgroundList
+	 * - bannerList
+	 */
+	function allScreensAsList(game) {
+		let out = [];
+		if (game) {
+			out = out.concat(game.assets.titlescreenList);
+			out = out.concat(game.assets.screenshotList);
+			out = out.concat(game.assets.backgroundList);
+			out = out.concat(game.assets.bannerList);
+		}
+		return out;
 	}
 }

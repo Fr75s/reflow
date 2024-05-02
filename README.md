@@ -24,5 +24,6 @@ While I would gladly accept your translations, due to the rapid ongoing developm
 
 ![Game Screen](assets/SAFELY_REMOVABLE/screenshot1.png)
 ![Showcase of the infinite boxes](assets/SAFELY_REMOVABLE/screenshot2.png)
+![Details Screen for a game](assets/SAFELY_REMOVABLE/screenshot5.png)
 ![Main Menu](assets/SAFELY_REMOVABLE/screenshot3.png)
 ![Settings Screen](assets/SAFELY_REMOVABLE/screenshot4.png)
