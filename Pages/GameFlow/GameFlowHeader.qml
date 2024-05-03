@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import QtGraphicalEffects 1.15
 
 Item {
 	width: parent.width
@@ -36,40 +37,71 @@ Item {
 
 		height: titleText.font.pixelSize
 
-		Text {
-			text: getBatteryIcon(api.device.batteryPercent)
-			visible: !isNaN(api.device.batteryPercent)
+		Image {
+			id: batteryIcon
+			source: getBatteryIcon()
+			visible: false
 
+			width: height
 			height: parent.height
-
-			verticalAlignment: Text.AlignVCenter
-			font {
-				family: icons.name
-				pixelSize: parent.height
-			}
-
-			color: colors.text
+			mipmap: true
+			verticalAlignment: Image.AlignVCenter
 
 			function getBatteryIcon() {
+				let src = "../../assets/icon/battery/";
 				if (!isNaN(api.device.batteryPercent)) {
-					if (api.device.batteryCharging) {
-						return icons.battery_charging;
+					// Get rounded %
+					let roundp = Math.round(api.device.batteryPercent * 100);
+
+					// Step through battery icons
+					if (roundp >= 80) {
+						src += "80";
+					} else if (roundp >= 60) {
+						src += "60"
+					} else if (roundp >= 40) {
+						src += "40"
+					} else if (roundp >= 20) {
+						src += "20"
 					} else {
-						var truncPercent = Math.round(api.device.batteryPercent * 10) * 10;
-						return icons.battery[truncPercent];
+						src += "0"
 					}
+
+					// Add charging icon
+					if (api.device.batteryCharging) {
+						if (roundp >= 99) {
+							src += "f";
+						} else {
+							src += "c";
+						}
+					}
+
+					src += ".svg";
+					return src;
 				} else {
-					return "";
+					return src + "0.svg";
 				}
 			}
 		}
 
+		ColorOverlay {
+			visible: batteryLabel.visible
+
+			width: batteryIcon.width
+			height: batteryIcon.height
+
+			source: batteryIcon
+			color: colors.text
+		}
+
 		Text {
+			id: batteryLabel
 			text: getBatteryPercent(api.device.batteryPercent)
 			visible: !isNaN(api.device.batteryPercent)
 
+			width: contentWidth + theme.width * 0.025
 			height: parent.height
 
+			horizontalAlignment: Text.AlignRight
 			verticalAlignment: Text.AlignVCenter
 			font {
 				family: display.name
@@ -81,7 +113,7 @@ Item {
 
 			function getBatteryPercent() {
 				if (!isNaN(api.device.batteryPercent)) {
-					return Math.round(api.device.batteryPercent * 100);
+					return Math.round(api.device.batteryPercent * 100) + "%";
 				} else {
 					return "";
 				}
@@ -104,6 +136,10 @@ Item {
 
 			function set() {
 				currentTime.text = settings["24hClock"] ? Qt.formatTime(new Date(), "hh:mm") : Qt.formatTime(new Date(), "hh:mm AP");
+				if (batteryLabel.visible) {
+					batteryIcon.source = batteryIcon.getBatteryIcon();
+					batteryLabel.text = batteryLabel.getBatteryPercent();
+				}
 			}
 
 			// Runs the timer to update the time every second
