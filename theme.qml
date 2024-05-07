@@ -18,8 +18,10 @@ FocusScope {
     //
 
     id: theme
-
     focus: true
+
+    // Version Number
+    property string version: "0.3.0"
 
     // Just a shorthand for the screen width and height
     property int sw: theme.width

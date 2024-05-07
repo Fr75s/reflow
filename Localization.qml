@@ -34,6 +34,7 @@ Item {
 
 			settings_subpage_localization: "Localization",
 			settings_localization_lang: "Language",
+			settings_localization_24h: "24 Hour Clock",
 
 			settings_other: "Other Settings",
 			settings_other_repreload: "Redo Preload",
@@ -41,6 +42,16 @@ Item {
 
 		"en-gb": {
 			name: "English (UK)",
+
+			details_not_applicable: "[]",
+			details_last_played: "[]",
+			details_last_played_never: "[]",
+			details_play_time: "[]",
+			details_play_time_never: "[]",
+			details_play_time_s: "[]",
+			details_play_time_m: "[]",
+			details_play_time_h: "[]",
+			details_rating: "[]",
 
 			main_menu_collections: "[]",
 			main_menu_settings: "[]",
@@ -59,6 +70,7 @@ Item {
 
 			settings_subpage_localization: "Localisation",
 			settings_localization_lang: "Language",
+			settings_localization_24h: "[]",
 
 			settings_other: "Other Settings",
 			settings_other_repreload: "Redo Preload",
@@ -66,6 +78,16 @@ Item {
 
 		"de": {
 			name: "Deutsch",
+
+			details_not_applicable: "[]",
+			details_last_played: "[]",
+			details_last_played_never: "[]",
+			details_play_time: "[]",
+			details_play_time_never: "[]",
+			details_play_time_s: "[]",
+			details_play_time_m: "[]",
+			details_play_time_h: "[]",
+			details_rating: "[]",
 
 			main_menu_collections: "[]",
 			main_menu_settings: "[]",
@@ -84,6 +106,7 @@ Item {
 
 			settings_subpage_localization: "[]",
 			settings_localization_lang: "[]",
+			settings_localization_24h: "[]",
 
 			settings_other: "Andere Einstellungen",
 			settings_other_repreload: "Vorladen wiederholen",
@@ -91,6 +114,16 @@ Item {
 
 		"nl": {
 			name: "Nederlands",
+
+			details_not_applicable: "[]",
+			details_last_played: "[]",
+			details_last_played_never: "[]",
+			details_play_time: "[]",
+			details_play_time_never: "[]",
+			details_play_time_s: "[]",
+			details_play_time_m: "[]",
+			details_play_time_h: "[]",
+			details_rating: "[]",
 
 			main_menu_collections: "[]",
 			main_menu_settings: "[]",
@@ -109,6 +142,7 @@ Item {
 
 			settings_subpage_localization: "[]",
 			settings_localization_lang: "[]",
+			settings_localization_24h: "[]",
 
 			settings_other: "Andere instellingen",
 			settings_other_repreload: "Voorbelasting hervoeren",
@@ -116,6 +150,16 @@ Item {
 
 		"bs": {
 			name: "Bosanski",
+
+			details_not_applicable: "[]",
+			details_last_played: "[]",
+			details_last_played_never: "[]",
+			details_play_time: "[]",
+			details_play_time_never: "[]",
+			details_play_time_s: "[]",
+			details_play_time_m: "[]",
+			details_play_time_h: "[]",
+			details_rating: "[]",
 
 			main_menu_collections: "[]",
 			main_menu_settings: "[]",
@@ -134,6 +178,7 @@ Item {
 
 			settings_subpage_localization: "[]",
 			settings_localization_lang: "[]",
+			settings_localization_24h: "[]",
 
 			settings_other: "Druga podešavanja",
 			settings_other_repreload: "Ponovi predučitavanje",
@@ -141,6 +186,16 @@ Item {
 
 		"hr": {
 			name: "Hrvatski",
+
+			details_not_applicable: "[]",
+			details_last_played: "[]",
+			details_last_played_never: "[]",
+			details_play_time: "[]",
+			details_play_time_never: "[]",
+			details_play_time_s: "[]",
+			details_play_time_m: "[]",
+			details_play_time_h: "[]",
+			details_rating: "[]",
 
 			main_menu_collections: "[]",
 			main_menu_settings: "[]",
@@ -159,6 +214,7 @@ Item {
 
 			settings_subpage_localization: "[]",
 			settings_localization_lang: "[]",
+			settings_localization_24h: "[]",
 
 			settings_other: "Druge postavke",
 			settings_other_repreload: "Ponovi predučitavanje",
@@ -166,6 +222,16 @@ Item {
 
 		"sr": {
 			name: "Српски",
+
+			details_not_applicable: "[]",
+			details_last_played: "[]",
+			details_last_played_never: "[]",
+			details_play_time: "[]",
+			details_play_time_never: "[]",
+			details_play_time_s: "[]",
+			details_play_time_m: "[]",
+			details_play_time_h: "[]",
+			details_rating: "[]",
 
 			main_menu_collections: "[]",
 			main_menu_settings: "[]",
@@ -184,6 +250,7 @@ Item {
 
 			settings_subpage_localization: "[]",
 			settings_localization_lang: "[]",
+			settings_localization_24h: "[]",
 
 			settings_other: "Друга подешавања",
 			settings_other_repreload: "Поновите предучитавање",

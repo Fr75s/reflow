@@ -12,11 +12,26 @@ x: Search functionality
 x: Non-infinite gameflow
 x: Box Art / Marquee switch (further information required)
 
+# 0.3.1
+
+x: Add settings
+x: Exit settings page gesture
+
 # 0.3.0
 
-- Add details screen
+- Added details screen
+	- Contains logo, image gallery & showcase, description, and ability to favorite/unfavorite
+	- Accessible via pressing "details" key on a game
+- Added favorite banner, which shows if a game is favorited on the collections menu
 - Collection selector menu (Accessible by pressing Page Up (L2) or swiping right from bottom left)
-- Click/Touch based gameflow scrolling
+- General improvements to mouse/touch based navigation
+- Improved Battery Icons
+- New Settings:
+	- Toggle 24 Hour Clock (Localization » 24 Hour Clock)
+	- Language (Localization » Language)
+		- Translations available for everything present in v0.2.0 and for some features in v0.3.0
+		- New Translations: British English, German, Dutch, Bosnian, Croatian, Serbian
+		- Translations provided by Github user SecularSteve
 
 # 0.2.0
 

@@ -91,6 +91,11 @@ FocusScope {
 					setting: "lang",
 					map: langNameMap
 				},
+				{
+					type: "setting_bin",
+					name: loc.settings_localization_24h,
+					setting: "24hClock"
+				},
 			]
 		},
 		{
