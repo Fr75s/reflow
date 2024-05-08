@@ -7,6 +7,13 @@ Item {
 		"en": {
 			name: "English (US)",
 
+			pop_dismiss: "Dismiss",
+			updpop_header: "New Update:",
+			updpop_get: "Get New Version",
+			updpop_info: `
+			reflow has detected a new version has been released. You are currently using version ${theme.version}. Please visit <a href="https://github.com/Fr75s/reflow/releases/latest">the latest release</a> to download the update.
+			`,
+
 			details_not_applicable: "N/A",
 			details_last_played: "Last Played",
 			details_last_played_never: "Never",
@@ -42,6 +49,13 @@ Item {
 
 		"en-gb": {
 			name: "English (UK)",
+
+			pop_dismiss: "Dismiss",
+			updpop_header: "[]",
+			updpop_get: "Get New Version",
+			updpop_info: `
+			[]
+			`,
 
 			details_not_applicable: "[]",
 			details_last_played: "[]",
@@ -79,6 +93,13 @@ Item {
 		"de": {
 			name: "Deutsch",
 
+			pop_dismiss: "[]",
+			updpop_header: "[]",
+			updpop_get: "[]",
+			updpop_info: `
+			[]
+			`,
+
 			details_not_applicable: "[]",
 			details_last_played: "[]",
 			details_last_played_never: "[]",
@@ -114,6 +135,13 @@ Item {
 
 		"nl": {
 			name: "Nederlands",
+
+			pop_dismiss: "[]",
+			updpop_header: "[]",
+			updpop_get: "[]",
+			updpop_info: `
+			[]
+			`,
 
 			details_not_applicable: "[]",
 			details_last_played: "[]",
@@ -151,6 +179,13 @@ Item {
 		"bs": {
 			name: "Bosanski",
 
+			pop_dismiss: "[]",
+			updpop_header: "[]",
+			updpop_get: "[]",
+			updpop_info: `
+			[]
+			`,
+
 			details_not_applicable: "[]",
 			details_last_played: "[]",
 			details_last_played_never: "[]",
@@ -187,6 +222,13 @@ Item {
 		"hr": {
 			name: "Hrvatski",
 
+			pop_dismiss: "[]",
+			updpop_header: "[]",
+			updpop_get: "[]",
+			updpop_info: `
+			[]
+			`,
+
 			details_not_applicable: "[]",
 			details_last_played: "[]",
 			details_last_played_never: "[]",
@@ -222,6 +264,13 @@ Item {
 
 		"sr": {
 			name: "Српски",
+
+			pop_dismiss: "[]",
+			updpop_header: "[]",
+			updpop_get: "[]",
+			updpop_info: `
+			[]
+			`,
 
 			details_not_applicable: "[]",
 			details_last_played: "[]",

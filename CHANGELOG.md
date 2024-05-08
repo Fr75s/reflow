@@ -17,6 +17,9 @@ x: Box Art / Marquee switch (further information required)
 x: Add settings
 x: Exit settings page gesture
 
+- Added Update Notification popup
+	- Fetches the latest release from github and checks if the current version is up to date
+
 # 0.3.0
 
 - Added details screen

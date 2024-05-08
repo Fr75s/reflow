@@ -150,6 +150,16 @@ FocusScope {
 
     // Interaction Screens
     Item {
+        id: interactionScreens
+        focus: true
+
+        opacity: updpop.active ? 0 : 1
+		Behavior on opacity {
+			NumberAnimation {
+				easing.type: Easing.InOutQuad
+				duration: 300
+			}
+		}
         width: parent.width
         height: parent.height
 
@@ -168,7 +178,7 @@ FocusScope {
             id: settingsPG
             focus: (screen === 1)
             visible: (y !== sh)
-            opacity: focus ? 1 : 0
+            opacity: focus || (updpop.active && screen === 1) ? 1 : 0
             Behavior on opacity {
                 NumberAnimation {
                     duration: 400
@@ -189,7 +199,7 @@ FocusScope {
             id: gameflow
             focus: (screen === 2 && !gameflowLSM.active)
             visible: (y !== sh)
-            opacity: (focus || gameflowLSM.active) ? 1 : 0
+            opacity: (focus || gameflowLSM.active || (updpop.active && screen === 2)) ? 1 : 0
             Behavior on opacity {
                 NumberAnimation {
                     duration: 400
@@ -229,6 +239,13 @@ FocusScope {
             }
         }
     }
+
+    UpdatePopup {
+        id: updpop
+        active: false
+        z: 100000
+    }
+
 
     // The Background
     // Background Gradients
@@ -285,5 +302,61 @@ FocusScope {
         newColor = opacity + newColor;
         newColor = "#" + newColor;
         return newColor;
+    }
+
+    // Detects if a new update is available.
+    function checkForNewUpdate() {
+        console.log("Checking for any updates...");
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            console.log(xhr.readyState);
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log("Latest release page fetched.");
+                    // A mess of regex to get the update tag from the latest releases page
+                    const tag = xhr.responseText
+                        .match(/<li(.*?)class="breadcrumb-item(.*?)releases\/tag(.*?)>/g)[0]
+                        .match(/tag\/(.*?)"/g)[0]
+                        .match(/\d+\.\d+\.\d+/g)[0];
+                    console.log("Most recent update:", tag);
+                    const comparisonWithCurrent = compareSemverTags(tag, theme.version);
+                    if (comparisonWithCurrent === 1) {
+                        console.log("! This version of reflow is out of date !");
+                        updpop.active = true;
+                        updpop.updString = tag;
+                    } else {
+                        console.log("This version is up to date.");
+                    }
+                } else {
+                    console.log("Error in fetching releases, ignoring...");
+                }
+            }
+        }
+        xhr.open("GET", "https://github.com/Fr75s/reflow/releases/latest");
+        xhr.send();
+    }
+
+    // Compares two semantic versioning tags a and b.
+    // Returns 0 if the versions are the same, 1 if a is more recent, and -1 if b is more recent.
+    function compareSemverTags(a, b) {
+        const aNums = a.match(/\d+/g);
+        const bNums = b.match(/\d+/g);
+        for (let i = 0; i < 2; i++) {
+            let compA = Number(aNums[i]);
+            let compB = Number(bNums[i]);
+            if (compA > compB) {
+                return 1;
+            } else if (compB > compA) {
+                return -1;
+            }
+        }
+        return 0;
+    }
+
+    //
+    Component.onCompleted: {
+        console.log("Theme initialized.");
+        console.log("REFLOW version", theme.version);
+        checkForNewUpdate();
     }
 }
