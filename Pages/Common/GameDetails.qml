@@ -1,4 +1,5 @@
-import QtQuick 2.8
+import QtQuick 2.15
+import QtGraphicalEffects 1.15
 
 import "../Common"
 
@@ -177,7 +178,10 @@ FocusScope {
 				</font><br><br>
 				${loc.details_last_played}: ${!isNaN(currentGame.lastPlayed) ? currentGame.lastPlayed.toLocaleDateString() : loc.details_last_played_never}<br>
 				${loc.details_play_time}: <i>${formattedPlaytime(currentGame.playTime)}</i><br>
-				${loc.details_rating}: ${formattedRating(currentGame.rating)}<br><br>
+				${loc.details_rating}: ${formattedRating(currentGame.rating)}<br>
+				${loc.details_num_players}: ${formattedNP(currentGame.players)}<br>
+				${loc.details_genres}: ${currentGame.genre}<br><br>
+				<font size="1">${loc.details_files}: ${formattedFiles(currentGame.files)}</font>
 				`;
 				color: colors.text
 
@@ -207,6 +211,26 @@ FocusScope {
 						return loc.details_not_applicable;
 					}
 				}
+
+				function formattedNP(num) {
+					let out = "";
+					for (let i = 0; i < num && i < 8; i++) {
+						out += `<img src="../../assets/icon/player.png" align="middle" width="${statsMain.font.pixelSize}" height="${statsMain.font.pixelSize}">`;
+					}
+					if (num > 8) {
+						out += "+";
+					}
+					return out;
+				}
+
+				function formattedFiles(f) {
+					let out = "";
+					for (let i = 0; i < f.count; i++) {
+						out += f.get(i).path + ", ";
+					}
+					out = out.substring(0, out.length - 2);
+					return out;
+				}
 			}
 
 			Text {
@@ -232,7 +256,29 @@ FocusScope {
 
 
 		// Screenshot Gallery
+		ImageShowcase {
+			id: galleryBG
+			z: gallery.z - 2
+			anchors.fill: gallery
+			fillSpace: true
+			imageList: allScreensAsList(currentGame);
+			visible: true
+		}
+
+		FastBlur {
+			anchors.fill: galleryBG
+			source: galleryBG
+			radius: 40
+		}
+
 		Rectangle {
+			anchors.fill: galleryBG
+			color: ocolor(colors.bg1, "80")
+		}
+
+		ImageShowcase {
+			id: gallery
+			z: parent.z
 			width: parent.width * 0.45
 			height: parent.height * 0.4
 
@@ -241,12 +287,7 @@ FocusScope {
 			anchors.bottom: parent.bottom
 			anchors.bottomMargin: parent.height * 0.25
 
-			color: "#000000"
-
-			ImageShowcase {
-				anchors.fill: parent
-				imageList: allScreensAsList(currentGame);
-			}
+			imageList: allScreensAsList(currentGame);
 		}
 
 		// Interaction Buttons

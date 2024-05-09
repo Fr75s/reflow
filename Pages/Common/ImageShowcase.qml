@@ -4,6 +4,8 @@ Item {
 	property int showcaseIndex: 0
 	property int showcaseAOpacityDuration: 300
 
+	property bool fillSpace: false
+
 	property var imageList: []
 	onImageListChanged: {
 		showcaseIndex = 0;
@@ -12,6 +14,7 @@ Item {
 	Image {
 		id: screenshotShowcaseA
 
+		z: parent.z + 3
 		opacity: 1
 		Behavior on opacity {
 			NumberAnimation {
@@ -20,7 +23,7 @@ Item {
 		}
 
 		anchors.fill: parent
-		fillMode: Image.PreserveAspectFit
+		fillMode: fillSpace ? Image.PreserveAspectCrop : Image.PreserveAspectFit
 
 		source: imageList.length > 0 ? imageList[showcaseIndex] : missingArt
 		asynchronous: true
@@ -40,7 +43,7 @@ Item {
 		z: screenshotShowcaseA.z + 1
 
 		anchors.fill: parent
-		fillMode: Image.PreserveAspectFit
+		fillMode: fillSpace ? Image.PreserveAspectCrop : Image.PreserveAspectFit
 
 		source: imageList.length > 0 ? (showcaseIndex > imageList.length - 2 ? imageList[0] : imageList[showcaseIndex + 1]) : missingArt
 		asynchronous: true

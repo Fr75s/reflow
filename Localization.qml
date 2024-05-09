@@ -23,6 +23,9 @@ Item {
 			details_play_time_m: " min.",
 			details_play_time_h: " hrs.",
 			details_rating: "Rating",
+			details_num_players: "# Players",
+			details_genres: "Genres",
+			details_files: "Files",
 
 			main_menu_collections: "Collections",
 			main_menu_settings: "Settings",
@@ -66,6 +69,9 @@ Item {
 			details_play_time_m: "[]",
 			details_play_time_h: "[]",
 			details_rating: "[]",
+			details_num_players: "[]",
+			details_genres: "[]",
+			details_files: "[]",
 
 			main_menu_collections: "[]",
 			main_menu_settings: "[]",
@@ -109,6 +115,9 @@ Item {
 			details_play_time_m: "[]",
 			details_play_time_h: "[]",
 			details_rating: "[]",
+			details_num_players: "[]",
+			details_genres: "[]",
+			details_files: "[]",
 
 			main_menu_collections: "[]",
 			main_menu_settings: "[]",
@@ -152,6 +161,9 @@ Item {
 			details_play_time_m: "[]",
 			details_play_time_h: "[]",
 			details_rating: "[]",
+			details_num_players: "[]",
+			details_genres: "[]",
+			details_files: "[]",
 
 			main_menu_collections: "[]",
 			main_menu_settings: "[]",
@@ -195,6 +207,9 @@ Item {
 			details_play_time_m: "[]",
 			details_play_time_h: "[]",
 			details_rating: "[]",
+			details_num_players: "[]",
+			details_genres: "[]",
+			details_files: "[]",
 
 			main_menu_collections: "[]",
 			main_menu_settings: "[]",
@@ -238,6 +253,9 @@ Item {
 			details_play_time_m: "[]",
 			details_play_time_h: "[]",
 			details_rating: "[]",
+			details_num_players: "[]",
+			details_genres: "[]",
+			details_files: "[]",
 
 			main_menu_collections: "[]",
 			main_menu_settings: "[]",
@@ -281,6 +299,9 @@ Item {
 			details_play_time_m: "[]",
 			details_play_time_h: "[]",
 			details_rating: "[]",
+			details_num_players: "[]",
+			details_genres: "[]",
+			details_files: "[]",
 
 			main_menu_collections: "[]",
 			main_menu_settings: "[]",
