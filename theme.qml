@@ -46,6 +46,8 @@ FocusScope {
         "24hClock": api.memory.has("24hClock") ? api.memory.get("24hClock") : false,
         "light": api.memory.has("light") ? api.memory.get("light") : false,
 
+        "a_gamebg": api.memory.has("a_gamebg") ? api.memory.get("a_gamebg") : true,
+
         "carousel_zoom": api.memory.has("carousel_zoom") ? api.memory.get("carousel_zoom") : 1,
         "carousel_up_menu": api.memory.has("carousel_up_menu") ? api.memory.get("carousel_up_menu") : true,
 
@@ -66,6 +68,7 @@ FocusScope {
                 outline: "#000000",
                 darkSurface: "#7C7f8e",
                 bottomIcons: "#F2F6FF", // Used as the color of the bottom bar icons
+                shadow: "#80000000",
             },
             "dark": {
                 bg1: "#16171A",
@@ -79,6 +82,7 @@ FocusScope {
                 outline: "#7c7f8e",
                 darkSurface: "#000000",
                 bottomIcons: "#F2F6FF",
+                shadow: "#ff000000",
             }
         }
     }

@@ -31,7 +31,7 @@ Item {
 
 		radius: 20
 		samples: 21
-		color: "#ff000000"
+		color: colors.shadow
 
 		source: gameBoxArt
 	}

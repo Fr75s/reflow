@@ -57,6 +57,11 @@ FocusScope {
 					map: themes
 				},
 				{
+					type: "setting_bin",
+					name: loc.settings_appearance_gamebg,
+					setting: "a_gamebg"
+				},
+				{
 					type: "setting_range",
 					name: loc.settings_appearance_zoom,
 					setting: "carousel_zoom",

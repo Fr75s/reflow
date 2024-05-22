@@ -237,6 +237,15 @@ FocusScope {
 		}
 	}
 
+	// Background
+	BlurGameBG {
+		anchors.fill: parent
+		z: -11
+
+		currentGame: currentCollection.games.get(gameflowView.selectionIndex)
+		visible: settings.a_gamebg
+	}
+
 	// Details Screen
 	GameDetails {
 		id: gameDetailsPage

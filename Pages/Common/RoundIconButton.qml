@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import QtGraphicalEffects 1.15
 
 Item {
 	id: roundIconButton
@@ -25,6 +26,7 @@ Item {
 	}
 
 	Image {
+		id: iconImg
 		anchors.fill: parent
 		anchors.margins: parent.height * 0.2
 
@@ -32,6 +34,14 @@ Item {
 
 		source: icon
 		mipmap: true
+		visible: false
+	}
+
+	ColorOverlay {
+		anchors.fill: iconImg
+		source: iconImg
+
+		color: settings.light ? "#000000" : "transparent"
 	}
 
 

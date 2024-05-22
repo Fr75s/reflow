@@ -48,7 +48,7 @@ FocusScope {
 		anchors.top: parent.top
 		anchors.topMargin: parent.height * 0.125
 
-		color: ocolor(colors.bg1, "80")
+		color: ocolor(colors.bg1, "a0")
 
 		radius: parent.height * 0.025
 

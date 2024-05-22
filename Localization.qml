@@ -38,6 +38,7 @@ Item {
 			settings_appearance_lightmode: "Light Mode",
 			settings_appearance_theme: "Interface Theme",
 			settings_appearance_zoom: "Interface Zoom",
+			settings_appearance_gamebg: "Game Backgrounds",
 
 			settings_subpage_behavior: "Behavior",
 			settings_behavior_carouselup: "Up → Main Menu",

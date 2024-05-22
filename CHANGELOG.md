@@ -11,6 +11,7 @@ x: Built-in update detector
 x: Search functionality
 x: Non-infinite gameflow
 x: Box Art / Marquee switch (further information required)
+x: Settings page animation improvements
 
 # 0.3.1
 
@@ -20,6 +21,7 @@ x: Exit settings page gesture
 - Improved look of screenshot gallery in details page
 - Added Update Notification popup
 	- Fetches the latest release from github and checks if the current version is up to date
+- Added game art to background (can be toggled in settings)
 
 # 0.3.0
 
